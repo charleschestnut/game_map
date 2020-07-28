@@ -4,9 +4,9 @@ def get_square_of_map(map, x, y, str_replace):
     new_map = ""
     counter = 0
     for line in range(len(map_matrix)):
-        if 3*y <= counter < 3*(y+1):
+        if 3*y <= counter < 3*(y)+2:
             start = 9*x
-            end = 9*(x+1)
+            end = 9*(x)+6
             line_square = map_matrix[line][start:end]
             line_square_edit = line_square.replace('   ', str_replace)
             map_matrix[line] = map_matrix[line][:start] + line_square_edit + map_matrix[line][end:]

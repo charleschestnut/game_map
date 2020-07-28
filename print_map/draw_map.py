@@ -1,4 +1,3 @@
-
 from draw_first_map import draw_square
 from round_squares import round_map
 from insert_types_square import insert_types_square
@@ -22,6 +21,52 @@ DICT_TYPES_LIST_3 = {
 }
 ROW_3 = 5
 COL_3 = 5
+
+VERTICAL_4 = [1, 0, 0, 0, 1, 1, 0, 1, 0,
+              1, 1, 0, 0, 1, 1, 0, 0, 1,
+              1,0,0,0,0,0,1,0,1,
+              0,0,1,0,0,0,0,0,1,
+              0,0,1,0,1,0,0,0,1,
+              1,0,0,0,0,0,1,0,1,
+              1,0,0,1,0,0,0,0,1,
+              0,1,0,0,0,0,1,0,0]
+HORIZONTAL_4 = [1,1,1,1,0,1,1,0,
+                0,1,0,0,0,0,0,1,
+                0,0,0,0,1,0,0,0,
+                1,1,0,0,0,0,1,0,
+                0,0,0,0,1,0,0,0,
+                1,1,0,0,0,0,0,0,
+                0,0,0,0,0,0,1,0,
+                1,0,1,0,0,0,1,1,
+                0,1,1,1,1,1,0,0]
+DICT_TYPES_LIST_4 = {
+    "MONSTER": [0,0,1,0,0,0,0,0,
+                0,0,0,0,0,0,0,1,
+                0,0,0,0,1,0,0,0,
+                0,0,1,0,0,0,0,0,
+                0,0,0,0,0,0,1,0,
+                0,0,0,1,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,1,0,0,0],
+    "START": [0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                1,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0],
+    "FINISH": [0,0,0,0,0,0,1,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0]
+}
+ROW_4 = 8
+COL_4 = 8
 
 
 def print_map(horizontal_walls, vertical_walls, rows, cols, dict_types_square):
@@ -47,4 +92,5 @@ def print_map(horizontal_walls, vertical_walls, rows, cols, dict_types_square):
 
 
 #print_map(horizontal_walls_2, vertical_walls_2, row_2, col_2)
-print_map(HORIZONTAL_3, VERTICAL_3, ROW_3, COL_3, DICT_TYPES_LIST_3)
+#print_map(HORIZONTAL_3, VERTICAL_3, ROW_3, COL_3, DICT_TYPES_LIST_3)
+print_map(HORIZONTAL_4, VERTICAL_4, ROW_4, COL_4, DICT_TYPES_LIST_4)
