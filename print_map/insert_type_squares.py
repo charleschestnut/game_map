@@ -1,36 +1,32 @@
-def get_square_of_map(map, x, y, str_replace):
-    map_matrix = map.splitlines()
+from auxiliary_methods import matrix_to_map
+
+
+def get_square_of_map(map_matrix, x, y, str_replace):
     # Una casilla tiene 3x9 caracteres
-    new_map = ""
-    counter = 0
     for line in range(len(map_matrix)):
-        if 3*y <= counter < 3*(y+1):
-            start = 9*x
-            end = 9*(x+1)
+        if 3 * y <= line < 3 * (y + 1):
+            start = 8 * x
+            end = 8 * (x + 1)
             line_square = map_matrix[line][start:end]
-            line_square_edit = line_square.replace('   ', str_replace)
+            line_square_edit = line_square.replace('       ', str_replace)
             map_matrix[line] = map_matrix[line][:start] + line_square_edit + map_matrix[line][end:]
-        counter += 1
 
-    for row in map_matrix:
-        for c in row:
-            new_map += c
-        new_map += '\n'
-
-    return new_map
+    return map_matrix
 
 
 def print_map_square_types(map, dict_type_list):
+    map_matrix = map.splitlines()
     for type in dict_type_list:
         for m in dict_type_list[type]:
             if type == "MONSTER":
-                map = get_square_of_map(map, m[0], m[1], '|M|')
+                map_matrix = get_square_of_map(map_matrix, m[0], m[1], '|M|.|M|')
             if type == "START":
-                map = get_square_of_map(map, m[0], m[1], '|S|')
+                map_matrix = get_square_of_map(map_matrix, m[0], m[1], '|S|.|S|')
             if type == "FINISH":
-                map = get_square_of_map(map, m[0], m[1], '|F|')
-    print(map)
-    return map
+                map_matrix = get_square_of_map(map_matrix, m[0], m[1], '|F|.|F|')
+    new_map = matrix_to_map(map_matrix)
+
+    return new_map
 
 
 # Método para el mapa
