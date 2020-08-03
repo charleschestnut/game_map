@@ -39,21 +39,21 @@ ROWS_7 = 9
 COLS_7 = 9
 
 
-empty_board_map = BoardMap(ROWS_2, COLS_2, SQUARES_2)
-column_board_map = BoardMap(ROWS_1, COLS_1, SQUARES_1)
-fake_column_board_map = BoardMap(ROWS_3, COLS_3, SQUARES_3)
-map_2_x_2_board = BoardMap(ROWS_4, COLS_4, SQUARES_4)
-normal_map_3_x_3_board = BoardMap(ROWS_5, COLS_5, SQUARES_5)
-board_map_3_x_3_fake_column = BoardMap(ROWS_6, COLS_6, SQUARES_6)
-board_map_9_x_9_normal = BoardMap(ROWS_7, COLS_7, SQUARES_7)
+column_board_map = BoardMap(ROWS_1, COLS_1 )
+empty_board_map = BoardMap(ROWS_2, COLS_2)
+fake_column_board_map = BoardMap(ROWS_3, COLS_3)
+map_2_x_2_board = BoardMap(ROWS_4, COLS_4)
+normal_map_3_x_3_board = BoardMap(ROWS_5, COLS_5)
+board_map_3_x_3_fake_column = BoardMap(ROWS_6, COLS_6)
+board_map_9_x_9_normal = BoardMap(ROWS_7, COLS_7)
 
-column = ConsoleInterface.print_map(column_board_map)
-empty_map = ConsoleInterface.print_map(empty_board_map)
-fake_column = ConsoleInterface.print_map(fake_column_board_map)
-map_2_x_2 = ConsoleInterface.print_map(map_2_x_2_board)
-normal_map_3_x_3 = ConsoleInterface.print_map(normal_map_3_x_3_board)
-fake_column_3_x_3 = ConsoleInterface.print_map(board_map_3_x_3_fake_column)
-normal_map_9_x_9 = ConsoleInterface.print_map(board_map_9_x_9_normal)
+column = ConsoleInterface.print_map(column_board_map, SQUARES_1)
+empty_map = ConsoleInterface.print_map(empty_board_map, SQUARES_2)
+fake_column = ConsoleInterface.print_map(fake_column_board_map, SQUARES_3)
+map_2_x_2 = ConsoleInterface.print_map(map_2_x_2_board, SQUARES_4)
+normal_map_3_x_3 = ConsoleInterface.print_map(normal_map_3_x_3_board, SQUARES_5)
+fake_column_3_x_3 = ConsoleInterface.print_map(board_map_3_x_3_fake_column, SQUARES_6)
+normal_map_9_x_9 = ConsoleInterface.print_map(board_map_9_x_9_normal, SQUARES_7)
 
 class MyTestCase(unittest.TestCase):
     def test_column(self):

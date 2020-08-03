@@ -20,11 +20,11 @@ SQUARES_2 = [1,1,1,1,1,1,1,1,1,
 ROWS_2 = 9
 COLS_2 = 9
 
-board_map_3_x_3_monster = BoardMap(ROWS_1, COLS_1, SQUARES_1)
-normal_map_3_x_3_monster = ConsoleInterface.print_map(board_map_3_x_3_monster)
+board_map_3_x_3_monster = BoardMap(ROWS_1, COLS_1)
+normal_map_3_x_3_monster = ConsoleInterface.print_map(board_map_3_x_3_monster, SQUARES_1)
 
-board_map_9_x_9_cool_mix = BoardMap(ROWS_2, COLS_2, SQUARES_2)
-cool_map_9_x_9 = ConsoleInterface.print_map(board_map_9_x_9_cool_mix)
+board_map_9_x_9_cool_mix = BoardMap(ROWS_2, COLS_2)
+cool_map_9_x_9 = ConsoleInterface.print_map(board_map_9_x_9_cool_mix, SQUARES_2)
 
 class MyTestCase(unittest.TestCase):
     def test_normal_3_x_3(self):
