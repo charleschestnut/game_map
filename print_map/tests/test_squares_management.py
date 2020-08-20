@@ -25,24 +25,9 @@ cols_6 = 3
 
 board_map_3_x_3 = BoardMap(rows_6, cols_6)
 board_map_3_x_3_8 = BoardMap(rows_6, cols_6)
-acc = 0
 
-for square_type in squares_6:
-    x = int(acc / rows_6)
-    y = acc % cols_6
-    position = Position(x, y)
-    square = Square(position, square_type, board_map_3_x_3)
-    board_map_3_x_3.append_square(square)
-    acc += 1
-acc = 0
-
-for square_type in squares_7:
-    x = int(acc / rows_6)
-    y = acc % cols_6
-    position = Position(x, y)
-    square = Square(position, square_type, board_map_3_x_3_8)
-    board_map_3_x_3_8.append_square(square)
-    acc += 1
+board_map_3_x_3.create_squares_of_boardmap(squares_6)
+board_map_3_x_3_8.create_squares_of_boardmap(squares_7)
 
 position_nineth = Position(2, 2)
 square_nineth = Square(position_nineth, 1, board_map_3_x_3_8)
