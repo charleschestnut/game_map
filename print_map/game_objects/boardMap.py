@@ -17,17 +17,16 @@ class BoardMap:
             self.append_square(sq)
 
     def append_square(self, square_type):
+
         if len(self.squares) >= self.rows*self.cols:
-            raise TypeError('The boardmap has all it squares: '+str(len(self.squares)+1) +
+            raise TypeError('The boardmap has all it squares: '+str(len(self.squares))+
                             '. Please, check them and modify'
                             ' them if you want to append another one.')
         index = len(self.squares)
         y = self.rows-1 - int(index / self.rows)
         x = index % self.cols
         square = Square(Position(x, y), square_type, self)
-
         self.squares.append(square)
-        square.boardmap = self
 
     def modify_square(self, x, y, square):
         index = x * cols + y

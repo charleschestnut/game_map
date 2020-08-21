@@ -29,9 +29,6 @@ board_map_3_x_3_8 = BoardMap(rows_6, cols_6)
 board_map_3_x_3.create_squares_of_boardmap(squares_6)
 board_map_3_x_3_8.create_squares_of_boardmap(squares_7)
 
-position_nineth = Position(2, 2)
-square_nineth = Square(position_nineth, 1, board_map_3_x_3_8)
-
 
 class MyTestCase(unittest.TestCase):
 
@@ -51,10 +48,11 @@ class MyTestCase(unittest.TestCase):
         self.assertRaises(TypeError, Square, position_5, 1, boardmap_1)
 
     def test_append_correct_square(self):
-        self.assertFalse(None, board_map_3_x_3_8.append_square(square_nineth))
+        r = board_map_3_x_3_8.append_square(1)
+        self.assertFalse(None, r)
 
     def test_append_extra_square(self):
-        self.assertRaises(TypeError, board_map_3_x_3.append_square, square_nineth)
+        self.assertRaises(TypeError, board_map_3_x_3.append_square, 1)
 
 
 if __name__ == '__main__':

@@ -14,6 +14,12 @@ class Square:
     def __str__(self):
         return str(self.position)+' - type: '+str(self.type)
 
+    def __lt__(self, other):
+        if self.position.x == other.position.x:
+            return self.position.y < other.position.y
+        else:
+            self.position.x < other.position.x
+
     def can_move_to_direction(self, direction):
         next_square = None
         if direction == 'L':
@@ -47,23 +53,37 @@ class Square:
 
             else:
                 dice_number -= 1
-                directions = map_square.calc_possible_directions()
+                directions = map_square.calc_possible_directions(direction)
                 for direction_value in directions:
                     map_square.calc_available_squares(map_square, dice_number,
                                                direction_value, positions)
         else:
             dice_number -= 1
-            directions = map_square.calc_possible_directions()
+            directions = map_square.calc_possible_directions(direction)
             for direction_value in directions:
                 map_square.calc_available_squares(map_square, dice_number,
                                            direction_value, positions)
         return list(set(positions))
 
-    def calc_possible_directions(self):
+    def calc_possible_directions(self, direction):
+        def remove_opposite_direction(directions, dir):
+            if dir == 'L':
+                directions.remove('R')
+            elif dir == 'R':
+                directions.remove('L')
+            elif dir == 'T':
+                directions.remove('B')
+            elif dir == 'B':
+                directions.remove('T')
+            return directions
+
         available_directions = []
         for dir in ['L', 'R', 'T', 'B']:
             if self.can_move_to_direction(dir):
                 available_directions.append(dir)
+        if len(available_directions) > 1:
+            available_directions = remove_opposite_direction(available_directions, direction)
+
         return available_directions
 
     def next_axis_position(self, direction):
