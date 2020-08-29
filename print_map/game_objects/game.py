@@ -6,6 +6,7 @@ from .consoleInterface import ConsoleInterface
 from .battle import Battle
 import random
 
+
 class Game:
     def __init__(self, board_map):
         self.board_map = board_map

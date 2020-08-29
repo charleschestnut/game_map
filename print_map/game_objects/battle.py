@@ -60,12 +60,10 @@ class Battle:
 
     def finish_battle(self, character_hp):
         if character_hp > 0:
-            print("NO MUEREEEEEEEEEEEEEE")
             self.character.level += 1
             if self.monster.weapon:
                 self.character.add_weapon(self.monster.weapon)
             return True
         else:
-            print("HA MUERTO0000000000000000000")
             self.character.game.characters_alive.remove(self.character)
             return False
