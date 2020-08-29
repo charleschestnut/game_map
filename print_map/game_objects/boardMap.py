@@ -1,12 +1,14 @@
 from .position import Position
 from .square import Square
-
+from .monster import Monster
+import random
 
 class BoardMap:
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
         self.squares = []
+        self.game = None
 
     def create_squares_of_boardmap(self, squares):
         if len(self.squares) != 0:
@@ -45,3 +47,6 @@ class BoardMap:
         for square in self.squares:
             if square.type == 4:
                 return square.position
+
+    def get_square_types_list(self):
+        return [square.type for square in self.squares]

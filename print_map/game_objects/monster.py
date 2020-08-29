@@ -18,6 +18,7 @@ class Monster:
         self.uses_magic = uses_magic
         self.vital_status = vital_status
         self.weapon = weapon
+        self.game = None
 
     def __str__(self):
         return 'Monster '+self.name

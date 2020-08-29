@@ -1,3 +1,6 @@
+import random
+
+
 class ConsoleInterface:
 
     @staticmethod
@@ -10,6 +13,104 @@ class ConsoleInterface:
                 map += '\n'
         print(map)
         return map
+
+    # THROW DICE
+    @staticmethod
+    def throw_dice(position):
+        dice = random.randint(1, 6)
+        string = "IT'S YOUR TURN! YOUR ACTUAL POSITION IS"+str(position)+"YOU HAVE THROWN YOUR DICE AND THE RESULT IS...\n"
+        if dice == 1:
+            string += "#####\n## ##\n   ##\n   ##\n########"
+        elif dice == 2:
+            string += "########\n      ##\n########\n##\n########"
+        elif dice == 3:
+            string += "########\n      ##\n########\n##\n########"
+        elif dice == 4:
+            string += "##    ##\n##    ##\n########\n      ##\n      ##"
+        elif dice == 5:
+            string += "########\n##\n########\n      ##\n########"
+        else:
+            string += "########\n##\n########\n##    ##\n########"
+        print(string)
+        return dice
+
+    # SQUARES CONSOLE
+    @staticmethod
+    def select_available_squares(squares):
+        str_input = 'Introduce the number of any of this position to move your character (from 0 to '+str(len(squares)-1)+'): \n'
+        acc = 0
+        for square in squares:
+            if square.type == 0:
+                str_input += "Square number "+str(acc)+": "+str(square.position) + ' \n'
+            elif square.type == 3:
+                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a monster.\n"
+            elif square.type == 4:
+                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a portal.\n"
+            elif square.type == 5:
+                str_input += "Square number "+str(acc)+": "+str(square.position) + " - YOU CAN WIN!.\n"
+            elif square.type == 6:
+                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a 6.\n"
+            elif square.type == 7:
+                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a 7.\n"
+            acc +=1
+
+        index = input(str_input)
+        try:
+            index_int = int(index)
+            assert (0 <= index_int <= len(squares) - 1)
+            selected_square = squares[index_int]
+        except:
+            selected_square = ConsoleInterface.select_available_squares(squares)
+        return selected_square
+
+    # BATTLE CONSOLE
+    @staticmethod
+    def print_finish_battle(battle, has_won, acc):
+        if has_won:
+            print('You have won in ' + str(acc) + ' iterations! Congratulations!\n'
+                                                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) + '.\n'
+                                                                                                               'Your current status is:\n' + str(
+                battle.character.get_total_vital_status()) + '\n'
+                                                             'Your current position is ' + str(
+                battle.character.position))
+
+        else:
+            print('You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n'
+                  'MUAHAHAHAHAHAHAHA!!!!!\n'
+                  '...\n'
+                  'I mean... You have been defeated, good luck next time! \n'
+                  'PS: You have lost in only ' + str(acc) + ' iteractions... \n'
+                                                            'MY GRANNY WOULD SURVIVE BETTER THAN YOU, MUAHAHAHAHA!!!!')
+
+    # CHARACTER'S SELECTION
+
+    # WIN GAME
+    @staticmethod
+    def finish_game(game, winner):
+        string = ''
+        if winner:
+            string = "The winner is..." + str(winner.name.upper() + "!!! \n"
+                                                                    "CON-GRA-TU-LA-TIONS!!!\n"
+                                                                    "But not to your mates, that were horrrible playing, oh my godness...\n"
+                                                                    " \n"
+                                                                    " \n")
+            for character in game.characters:
+                if character.name != winner.name:
+                    c_name = character.name
+                    string += "Come on, " + str(c_name) + ". How could you lose in that way?\n" \
+                                                          "We're too embarrased, really... Next time will be better...\n" \
+                                                          "I guess...\n"
+
+        else:
+            for character in game.characters:
+                c_name = character.name
+                string = "Come on, " + str(c_name) + ". How could you lose in that way?\n" \
+                                                      "We're too embarrased, really... Next time will be better...\n" \
+                                                      "I guess...\n"
+        string += "\n\n\n" \
+                  "I hope that you enjoyed that demo!\n" \
+                  "See you all soon!"
+        print(string)
 
 
 def square_to_string(boardmap, numeric_square_list, index):

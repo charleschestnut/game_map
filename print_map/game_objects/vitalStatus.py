@@ -46,16 +46,20 @@ class VitalStatus:
         return res
 
     def get_vital_status_at_level(self, level):
-
+        health = self.health
+        attack = self.attack
+        magic_power = self.magic_power
+        defense = self.defense
+        magic_defense = self.magic_defense
         for lvl in range(level-1):
-            self.health *= (1 + self.status_proportion[0])
-            self.attack *= (1 + self.status_proportion[1])
-            self.magic_power *= (1 + self.status_proportion[2])
-            self.defense *= (1 + self.status_proportion[3])
-            self.magic_defense *= (1 + self.status_proportion[4])
-        self.health = int(self.health)
-        self.attack = int(self.attack)
-        self.magic_power = int(self.magic_power)
-        self.defense = int(self.defense)
-        self.magic_defense = int(self.magic_defense)
-        return self
+            health *= (1 + self.status_proportion[0])
+            attack *= (1 + self.status_proportion[1])
+            magic_power *= (1 + self.status_proportion[2])
+            defense *= (1 + self.status_proportion[3])
+            magic_defense *= (1 + self.status_proportion[4])
+        health = int(health)
+        attack = int(attack)
+        magic_power = int(magic_power)
+        defense = int(defense)
+        magic_defense = int(magic_defense)
+        return VitalStatus(health, attack, magic_power, defense, magic_defense)

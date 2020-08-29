@@ -40,7 +40,7 @@ class Square:
         else:
             return True
 
-    def get_availables_squares(self, dice_number):
+    def get_available_squares(self, dice_number):
         available_squares = self.calc_available_squares(self, dice_number, None, positions=[])
         return available_squares
 
