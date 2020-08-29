@@ -1,5 +1,5 @@
-from .square import Square
 from .position import Position
+from .square import Square
 
 
 class BoardMap:
@@ -10,7 +10,7 @@ class BoardMap:
 
     def create_squares_of_boardmap(self, squares):
         if len(self.squares) != 0:
-            raise TypeError('The boardmap has all it squares: '+str(len(self.squares)+1) +
+            raise TypeError('The boardmap has all it squares: ' + str(len(self.squares) + 1) +
                             '. Please, check them and modify'
                             ' them if you want to append another one.')
         for sq in squares:
@@ -18,12 +18,12 @@ class BoardMap:
 
     def append_square(self, square_type):
 
-        if len(self.squares) >= self.rows*self.cols:
-            raise TypeError('The boardmap has all it squares: '+str(len(self.squares))+
+        if len(self.squares) >= self.rows * self.cols:
+            raise TypeError('The boardmap has all it squares: ' + str(len(self.squares)) +
                             '. Please, check them and modify'
                             ' them if you want to append another one.')
         index = len(self.squares)
-        y = self.rows-1 - int(index / self.rows)
+        y = self.rows - 1 - int(index / self.rows)
         x = index % self.cols
         square = Square(Position(x, y), square_type, self)
         self.squares.append(square)
@@ -40,3 +40,8 @@ class BoardMap:
         for square in squares:
             if position_x == square.position.x and position_y == square.position.y:
                 return square
+
+    def get_start_position(self):
+        for square in self.squares:
+            if square.type == 4:
+                return square.position

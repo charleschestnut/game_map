@@ -1,6 +1,3 @@
-from .boardMap import BoardMap
-
-
 class ConsoleInterface:
 
     @staticmethod

@@ -1,12 +1,19 @@
+from .boardMap import BoardMap
+from .vitalStatus import VitalStatus
+
+
 class Character:
 
-    def __init__(self, name, vital_status, board_map):
-        if not name:
-            raise(Exception, 'The character can not have a None name.')
-        if not vital_status:
-            raise(Exception, 'The character can not have a None vital status.')
-        if not board_map:
-            raise(Exception, 'The map of the character is None.')
+    def __init__(self, name, uses_magic, vital_status, board_map):
+        if not name or not isinstance(name, str):
+            raise (Exception, 'The character can not have a None name.')
+        if not vital_status or not isinstance(vital_status, VitalStatus):
+            raise (Exception, 'The character can not have a None vital status.')
+        if not board_map or not isinstance(board_map, BoardMap):
+            raise (Exception, 'The map of the character is None.')
+        if uses_magic is None or not isinstance(uses_magic, bool):
+            raise(Exception, 'The character can not have a uses_magic instance that is not Boolean')
+
         self.name = name
         self.vital_status = vital_status
         self.board_map = board_map
@@ -15,7 +22,7 @@ class Character:
         self.weapons = []
 
     def __str__(self):
-        return 'Character :'+str(self.name)+' - Map: '+str(self.board_map)+' Position: '+str(self.position)
+        return 'Character :' + str(self.name) + ' - Map: ' + str(self.board_map) + ' Position: ' + str(self.position)
 
     def get_total_vital_status(self):
         total_vital_status = self.vital_status
@@ -36,8 +43,8 @@ class Character:
             self.level += weapon.vital_status.extra_level
 
     def remove_weapon(self, index):
-        if index+1 > len(self.weapons):
-            raise(Exception, 'To remove a weapon, select a integer between zero(0) and '+str(len(self.weapons)))
+        if index + 1 > len(self.weapons):
+            raise (Exception, 'To remove a weapon, select a integer between zero(0) and ' + str(len(self.weapons)))
         else:
             del self.weapons[index]
 
@@ -90,4 +97,12 @@ class Character:
                 self.base_vital_status.change_to_level(self.level)
 
     def set_position(self, position):
+        square_to_move = self.board_map.get_square_by_position(position.x, position.y)
+        if square_to_move.type == 1:
+            raise (Exception, 'The character can not move to this position because this square'
+                              ' with position ' + str(position) + ' is a wall.')
+        if square_to_move.type == 2 and self.level < 3:
+            raise (Exception, 'The character can not move to this position because this square'
+                              ' with position ' + str(position) + ' is a fake wall and the level is '
+                   + str(self.level) + '. The character need to have a higher level.')
         self.position = position

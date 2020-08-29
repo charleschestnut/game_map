@@ -14,8 +14,9 @@ class Weapon:
         if not isinstance(vital_status, VitalStatus):
             raise (Exception, 'The vital status of the weapon is not a VitalStatus instance')
 
-
-
         self.name = name
         self.description = description
         self.vital_status = vital_status
+
+    def __str__(self):
+        return self.name+': '+self.description[:10]+'...'

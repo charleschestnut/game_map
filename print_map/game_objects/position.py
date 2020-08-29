@@ -4,4 +4,4 @@ class Position:
         self.y = y
 
     def __str__(self):
-        return '('+str(self.x)+', '+str(self.y)+')'
+        return '(' + str(self.x) + ', ' + str(self.y) + ')'

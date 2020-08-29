@@ -12,7 +12,7 @@ class Square:
         self.boardmap = boardmap
 
     def __str__(self):
-        return str(self.position)+' - type: '+str(self.type)
+        return str(self.position) + ' - type: ' + str(self.type)
 
     def __lt__(self, other):
         if self.position.x == other.position.x:
@@ -23,7 +23,7 @@ class Square:
     def can_move_to_direction(self, direction):
         next_square = None
         if direction == 'L':
-            next_square = self.boardmap.get_square_by_position(self.position.x - 1, self.position.y) #TODO
+            next_square = self.boardmap.get_square_by_position(self.position.x - 1, self.position.y)  # TODO
         elif direction == 'R':
             next_square = self.boardmap.get_square_by_position(self.position.x + 1, self.position.y)
         elif direction == 'T':
@@ -56,13 +56,13 @@ class Square:
                 directions = map_square.calc_possible_directions(direction)
                 for direction_value in directions:
                     map_square.calc_available_squares(map_square, dice_number,
-                                               direction_value, positions)
+                                                      direction_value, positions)
         else:
             dice_number -= 1
             directions = map_square.calc_possible_directions(direction)
             for direction_value in directions:
                 map_square.calc_available_squares(map_square, dice_number,
-                                           direction_value, positions)
+                                                  direction_value, positions)
         return list(set(positions))
 
     def calc_possible_directions(self, direction):

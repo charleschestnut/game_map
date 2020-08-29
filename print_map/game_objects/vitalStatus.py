@@ -8,7 +8,8 @@ class VitalStatus:
             elif not isinstance(state, int):
                 raise Exception('The state must be an integer.')
             elif state <= 0:
-                raise Exception('The state must be higher than zero.')
+                if status_proportion:
+                    raise Exception('The state must be higher than zero.')
 
         if status_proportion:
             if len(status_proportion) != 5:
