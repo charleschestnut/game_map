@@ -49,9 +49,14 @@ class MyTestCase(unittest.TestCase):
 
     def test_get_vital_status_level_one(self):
         status_proportion = [0.5, 0.5, 0.7, 0.9, 0.8]
-        v_status = VitalStatus(10, 10, 10, 10, 10, status_proportion, -1)
+        v_status = VitalStatus(10, 10, 10, 10, 10, status_proportion, 0)
         status_level_one = v_status.get_vital_status_at_level(1)
-        self.assertEqual(v_status, status_level_one)
+        self.assertEqual(v_status.health, status_level_one.health)
+        self.assertEqual(v_status.attack, status_level_one.attack)
+        self.assertEqual(v_status.magic_power, status_level_one.magic_power)
+        self.assertEqual(v_status.magic_defense, status_level_one.magic_defense)
+        self.assertEqual(v_status.defense, status_level_one.defense)
+
 
     def test_get_vital_status_level_two(self):
         status_proportion = [0.5, 0.5, 0.7, 0.9, 0.8]

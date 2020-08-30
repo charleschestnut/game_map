@@ -2,3 +2,9 @@ from .boardMap import BoardMap
 from .consoleInterface import ConsoleInterface
 from .position import Position
 from .square import Square
+from .character import Character
+from .weapon import Weapon
+from .vitalStatus import VitalStatus
+from .battle import Battle
+from .monster import Monster
+from .game import Game

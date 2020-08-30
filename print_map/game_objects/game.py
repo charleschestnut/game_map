@@ -87,8 +87,10 @@ class Game:
 
     def start_game_console(self):
         winner = None
+        ConsoleInterface.welcome()
         while len(self.characters_alive) > 0 or not self.has_any_character_won:
             for character in self.characters_alive:
+                ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
                 actual_square = self.board_map.get_square_by_position(character.position.x, character.position.y)
                 dice = ConsoleInterface.throw_dice(actual_square.position)
                 available_squares = actual_square.get_available_squares(dice)
@@ -111,6 +113,7 @@ class Game:
 
     def start_game_only_movement(self):
         winner = None
+        ConsoleInterface.welcome()
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
                 ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())

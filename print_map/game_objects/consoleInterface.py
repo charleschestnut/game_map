@@ -13,24 +13,71 @@ class ConsoleInterface:
                 map += '\n'
         print(map)
         return map
+    # WELCOME
+    @staticmethod
+    def welcome():
+        string = """
+        #########################################################################################################
+        #                                                                                                       #
+        #    #########  ##########  #####   #####  #########          #####   #####  ##########  ##########     #
+        #    ##         ##      ##  ##  ## ##  ##  ##                 ##  ## ##  ##  ##      ##  ##      ##     #
+        #    ##         ##      ##  ##   ###   ##  ##                 ##   ###   ##  ##      ##  ##      ##     #
+        #    ##  #####  ##########  ##    #    ##  #######     ####   ##    #    ##  ##########  ##########     #
+        #    ##     ##  ##      ##  ##         ##  ##                 ##         ##  ##      ##  ##             #
+        #    #########  ##      ##  ##         ##  #########          ##         ##  ##      ##  ##             #
+        #                                                                                                       #
+        #########################################################################################################
+        """
+        print(string)
 
     # THROW DICE
     @staticmethod
     def throw_dice(position):
         dice = random.randint(1, 6)
-        string = "IT'S YOUR TURN! YOUR ACTUAL POSITION IS"+str(position)+"YOU HAVE THROWN YOUR DICE AND THE RESULT IS...\n"
+        string = "\nIT'S YOUR TURN! YOUR ACTUAL POSITION IS" + str(position) + \
+                 "YOU HAVE THROWN YOUR DICE AND THE RESULT IS..."
         if dice == 1:
-            string += "#####\n## ##\n   ##\n   ##\n########"
+            string += """
+                 #####
+                 ## ##
+                    ##
+                    ##
+                 ########"""
         elif dice == 2:
-            string += "########\n      ##\n########\n##\n########"
+            string += """
+                 ########
+                       ##
+                 ########
+                 ##
+                 ########"""
         elif dice == 3:
-            string += "########\n      ##\n########\n##\n########"
+            string += """
+                 ########
+                       ##
+                 ########
+                       ##
+                 ########"""
         elif dice == 4:
-            string += "##    ##\n##    ##\n########\n      ##\n      ##"
+            string += """
+                 ##    ##
+                 ##    ##
+                 ########
+                       ##
+                       ##"""
         elif dice == 5:
-            string += "########\n##\n########\n      ##\n########"
+            string += """
+                 ########
+                 ##
+                 ########
+                       ##
+                 ########"""
         else:
-            string += "########\n##\n########\n##    ##\n########"
+            string += """
+                 ########
+                 ##
+                 ########
+                 ##    ##
+                 ########"""
         print(string)
         return dice
 
@@ -66,21 +113,44 @@ class ConsoleInterface:
     # BATTLE CONSOLE
     @staticmethod
     def print_finish_battle(battle, has_won, acc):
+        battle_string = """
+        ##########                                      # \                       / #
+        #  #  #  #                                      #  \                     /  #
+        #        #                                      #############################
+        ##########                                      ##   ..               ..   ##
+            ##            ###      ###   #######        ##   # \             / #   ##
+            ##             ##      ##    ##             ##   #__\           /__#   ##
+        ##  ##  ##          ##    ##     #######        ##                         ##
+         ########            ##  ##           ##        ##                         ##
+            ##                ####       #######        ##   ##################    ##
+            ##                                          ##   #/\/\/\/\/\/\/\/\#    ##
+           ####                                         ##   ##################    ##
+          ##  ##                                        ##                         ##
+         ##    ##                                       #############################
+        """
+        print(battle_string)
         if has_won:
+            string = """
+            ###     ###  ########  ########  ##########  ########  ########  ##    ##    ##
+             ##     ##      ##     ##            ##      ##    ##  ##    ##   ##  ##     ##
+              ##   ##       ##     ##            ##      ##    ##  ########    ####      ##
+               ## ##        ##     ##            ##      ##    ##  ##   ##      ##       
+                ###      ########  ########      ##      ########  ##    ##     ##       ##
+            """
+
+            print(string)
             print('You have won in ' + str(acc) + ' iterations! Congratulations!\n'
-                                                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) + '.\n'
-                                                                                                               'Your current status is:\n' + str(
-                battle.character.get_total_vital_status()) + '\n'
-                                                             'Your current position is ' + str(
-                battle.character.position))
+                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) + '.\n'
+                  'Your current status is:\n' + str(battle.character.get_total_vital_status())+'\n'
+                  'Your current position is ' + str(battle.character.position))
 
         else:
-            print('You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n'
-                  'MUAHAHAHAHAHAHAHA!!!!!\n'
-                  '...\n'
-                  'I mean... You have been defeated, good luck next time! \n'
-                  'PS: You have lost in only ' + str(acc) + ' iteractions... \n'
-                                                            'MY GRANNY WOULD SURVIVE BETTER THAN YOU, MUAHAHAHAHA!!!!')
+            string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!!" \
+                     "MUAHAHAHAHAHAHAHA!!!!!" \
+                     "..." \
+                     "I mean... You have been defeated, good luck next time!" \
+                     "PS: You have lost in only " + str(acc) + " iteractions..." \
+                     "MY GRANNY WOULD SURVIVE BETTER THAN YOU, MUAHAHAHAHA!!!!\n\n"""
 
     # CHARACTER'S SELECTION
 

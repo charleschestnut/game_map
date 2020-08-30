@@ -72,7 +72,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_1 = board_map_4_x_4_normal.get_square_by_position(2, 2)
         possible_square_2 = board_map_4_x_4_normal.get_square_by_position(1, 1)
         possible_squares = set([possible_square_1, possible_square_2])
-        possible_squares_dice = square_1_2.get_availables_squares(dice_number)
+        possible_squares_dice = square_1_2.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -80,7 +80,7 @@ class MyTestCase(unittest.TestCase):
         dice_number = 2
         possible_square_1 = board_map_4_x_4_normal.get_square_by_position(2, 1)
         possible_squares = set([possible_square_1])
-        possible_squares_dice = square_1_2.get_availables_squares(dice_number)
+        possible_squares_dice = square_1_2.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -90,7 +90,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_1 = board_map_9_x_9.get_square_by_position(2, 7)
         possible_square_2 = board_map_9_x_9.get_square_by_position(1, 6)
         possible_squares = set([possible_square_1, possible_square_2])
-        possible_squares_dice = square_1_7_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_1_7_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -100,7 +100,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_2 = board_map_9_x_9.get_square_by_position(1, 5)
         possible_square_3 = board_map_9_x_9.get_square_by_position(2, 6)
         possible_squares = set([possible_square_1, possible_square_2, possible_square_3])
-        possible_squares_dice = square_1_7_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_1_7_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -112,7 +112,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_4 = board_map_9_x_9.get_square_by_position(2, 7)
         possible_squares = list(set([possible_square_1, possible_square_2,
                                      possible_square_3, possible_square_4]))
-        possible_squares_dice = square_1_7_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_1_7_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(set(possible_squares), set(possible_squares_dice))
 
@@ -124,7 +124,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_4 = board_map_9_x_9.get_square_by_position(5, 4)
         possible_squares = set([possible_square_1, possible_square_2,
                                  possible_square_3, possible_square_4])
-        possible_squares_dice = square_4_4_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_4_4_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -136,7 +136,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_4 = board_map_9_x_9.get_square_by_position(6, 4)
         possible_squares = set([possible_square_1, possible_square_2,
                                  possible_square_3, possible_square_4])
-        possible_squares_dice = square_4_4_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_4_4_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -148,7 +148,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_4 = board_map_9_x_9.get_square_by_position(7, 4)
         possible_squares = set([possible_square_1, possible_square_2,
                                 possible_square_3, possible_square_4])
-        possible_squares_dice = square_4_4_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_4_4_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -166,7 +166,7 @@ class MyTestCase(unittest.TestCase):
                                 possible_square_3, possible_square_4,
                                 possible_square_5, possible_square_6,
                                 possible_square_7, possible_square_8])
-        possible_squares_dice = square_4_4_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_4_4_9x9.get_available_squares(dice_number)
 
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
@@ -175,7 +175,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_1 = board_map_9_x_9.get_square_by_position(6, 7)
         possible_square_2 = board_map_9_x_9.get_square_by_position(7, 6)
         possible_squares = set([possible_square_1, possible_square_2])
-        possible_squares_dice = square_6_6_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_6_6_9x9.get_available_squares(dice_number)
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
     def test_calc_possible_directions_dice_11(self):
@@ -185,7 +185,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_3 = board_map_9_x_9.get_square_by_position(5, 7)
         possible_squares = set([possible_square_1, possible_square_2,
                                 possible_square_3])
-        possible_squares_dice = square_6_6_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_6_6_9x9.get_available_squares(dice_number)
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
     def test_calc_possible_directions_dice_12(self):
@@ -196,7 +196,7 @@ class MyTestCase(unittest.TestCase):
         possible_square_4 = board_map_9_x_9.get_square_by_position(4, 7)
         possible_squares = set([possible_square_1, possible_square_2,
                                 possible_square_3, possible_square_4])
-        possible_squares_dice = square_6_6_9x9.get_availables_squares(dice_number)
+        possible_squares_dice = square_6_6_9x9.get_available_squares(dice_number)
         self.assertSetEqual(possible_squares, set(possible_squares_dice))
 
 
