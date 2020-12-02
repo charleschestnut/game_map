@@ -36,7 +36,7 @@ class ConsoleInterface:
     def throw_dice(position, character_name):
         dice = random.randint(1, 6)
         string = character_name + " IT'S YOUR TURN! YOUR ACTUAL POSITION IS" +\
-                 str(position) + "YOU HAVE THROWN YOUR DICE AND THE RESULT IS..."
+            str(position) + "YOU HAVE THROWN YOUR DICE AND THE RESULT IS..."
         if dice == 1:
             string += """
                  #####
@@ -142,10 +142,9 @@ class ConsoleInterface:
 
             print(string)
             print('You have won in ' + str(acc) + ' iterations! Congratulations!\n'
-                                                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) +
-                  '.\n Your current status is:\n' + str(battle.character.get_total_vital_status()) + '\n'
-                                                                                                     'Your current position is ' + str(
-                battle.character.position))
+                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) +
+                  '.\n Your current status is:\n' + str(battle.character.get_total_vital_status()) +
+                  '\nYour current position is ' + str(battle.character.position))
 
         else:
             string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n" \
