@@ -13,6 +13,7 @@ class ConsoleInterface:
                 map += '\n'
         print(map)
         return map
+
     # WELCOME
     @staticmethod
     def welcome():
@@ -32,10 +33,10 @@ class ConsoleInterface:
 
     # THROW DICE
     @staticmethod
-    def throw_dice(position):
+    def throw_dice(position, character_name):
         dice = random.randint(1, 6)
-        string = "\nIT'S YOUR TURN! YOUR ACTUAL POSITION IS" + str(position) + \
-                 "YOU HAVE THROWN YOUR DICE AND THE RESULT IS..."
+        string = character_name + " IT'S YOUR TURN! YOUR ACTUAL POSITION IS" +\
+                 str(position) + "YOU HAVE THROWN YOUR DICE AND THE RESULT IS..."
         if dice == 1:
             string += """
                  #####
@@ -84,22 +85,23 @@ class ConsoleInterface:
     # SQUARES CONSOLE
     @staticmethod
     def select_available_squares(squares):
-        str_input = 'Introduce the number of any of this position to move your character (from 0 to '+str(len(squares)-1)+'): \n'
+        str_input = 'Introduce the number of any of this position to move your character (from 0 to ' + str(
+            len(squares) - 1) + '): \n'
         acc = 0
         for square in squares:
             if square.type == 0:
-                str_input += "Square number "+str(acc)+": "+str(square.position) + ' \n'
+                str_input += "Square number " + str(acc) + ": " + str(square.position) + ' \n'
             elif square.type == 3:
-                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a monster.\n"
+                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a monster.\n"
             elif square.type == 4:
-                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a portal.\n"
+                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a portal.\n"
             elif square.type == 5:
-                str_input += "Square number "+str(acc)+": "+str(square.position) + " - YOU CAN WIN!.\n"
+                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - YOU CAN WIN!.\n"
             elif square.type == 6:
-                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a 6.\n"
+                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a 6.\n"
             elif square.type == 7:
-                str_input += "Square number "+str(acc)+": "+str(square.position) + " - There's a 7.\n"
-            acc +=1
+                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a 7.\n"
+            acc += 1
 
         index = input(str_input)
         try:
@@ -140,17 +142,20 @@ class ConsoleInterface:
 
             print(string)
             print('You have won in ' + str(acc) + ' iterations! Congratulations!\n'
-                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) + '.\n'
-                  'Your current status is:\n' + str(battle.character.get_total_vital_status())+'\n'
-                  'Your current position is ' + str(battle.character.position))
+                                                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) +
+                  '.\n Your current status is:\n' + str(battle.character.get_total_vital_status()) + '\n'
+                                                                                                     'Your current position is ' + str(
+                battle.character.position))
 
         else:
             string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!!" \
                      "MUAHAHAHAHAHAHAHA!!!!!" \
                      "..." \
                      "I mean... You have been defeated, good luck next time!" \
-                     "PS: You have lost in only " + str(acc) + " iteractions..." \
-                     "MY GRANNY WOULD SURVIVE BETTER THAN YOU, MUAHAHAHAHA!!!!\n\n"""
+                     "PS: You have lost in only " + str(acc) + " interactions..." \
+                                                               "MY GRANNY WOULD SURVIVE BETTER THAN YOU, " \
+                                                               "MUAHAHAHAHA!!!!\n\n"" "
+
 
     # CHARACTER'S SELECTION
 
@@ -159,24 +164,29 @@ class ConsoleInterface:
     def finish_game(game, winner):
         string = ''
         if winner:
-            string = "The winner is..." + str(winner.name.upper() + "!!! \n"
-                                                                    "CON-GRA-TU-LA-TIONS!!!\n"
-                                                                    "But not to your mates, that were horrrible playing, oh my godness...\n"
-                                                                    " \n"
-                                                                    " \n")
+            string = "The winner is..." + str(winner.name.upper() +
+                                              "!!! \n"
+                                              "CON-GRA-TU-LA-TIONS!!!\n"
+                                              "But not to your mates, that were horrrible "
+                                              "playing, oh my godness...\n "
+                                              " \n"
+                                              " \n")
             for character in game.characters:
                 if character.name != winner.name:
                     c_name = character.name
-                    string += "Come on, " + str(c_name) + ". How could you lose in that way?\n" \
-                                                          "We're too embarrased, really... Next time will be better...\n" \
-                                                          "I guess...\n"
+                    string += "Come on, " + str(c_name) + \
+                              ". How could you lose in that way?\n" \
+                              "We're too embarrased, really... Next time will be " \
+                              "better...\n" \
+                              "I guess...\n"
 
         else:
             for character in game.characters:
                 c_name = character.name
-                string = "Come on, " + str(c_name) + ". How could you lose in that way?\n" \
-                                                      "We're too embarrased, really... Next time will be better...\n" \
-                                                      "I guess...\n"
+                string = "Come on, " + str(c_name) + \
+                         ". How could you lose in that way?\n" \
+                         "We're too embarrased, really... Next time will be better...\n" \
+                         "I guess...\n"
         string += "\n\n\n" \
                   "I hope that you enjoyed that demo!\n" \
                   "See you all soon!"

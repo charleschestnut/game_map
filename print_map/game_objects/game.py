@@ -92,22 +92,22 @@ class Game:
             for character in self.characters_alive:
                 ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
                 actual_square = self.board_map.get_square_by_position(character.position.x, character.position.y)
-                dice = ConsoleInterface.throw_dice(actual_square.position)
+                dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
                 available_squares = actual_square.get_available_squares(dice)
                 selected_square = ConsoleInterface.select_available_squares(available_squares)
                 character.set_position(selected_square.position)
-                if selected_square.type == 3:
+                if selected_square.type == 3:  # BATTLE
                     battle = Battle(character)
                     has_won, rounds = battle.realise()
                     ConsoleInterface.print_finish_battle(battle, has_won, rounds)
-                elif selected_square.type == 4:
+                elif selected_square.type == 4:  # FINISH
                     winner = character
                     break
-                elif selected_square.type == 5:
+                elif selected_square.type == 5:  #
                     ''
-                elif selected_square.type == 6:
+                elif selected_square.type == 6:  #
                     ''
-                elif selected_square.type == 7:
+                elif selected_square.type == 7:  #
                     ''
         ConsoleInterface.finish_game(self, winner)
 
@@ -118,7 +118,7 @@ class Game:
             for character in self.characters_alive:
                 ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
                 actual_square = self.board_map.get_square_by_position(character.position.x, character.position.y)
-                dice = ConsoleInterface.throw_dice(actual_square.position)
+                dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
                 available_squares = actual_square.get_available_squares(dice)
                 selected_square = ConsoleInterface.select_available_squares(available_squares)
                 character.set_position(selected_square.position)
