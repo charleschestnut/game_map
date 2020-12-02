@@ -148,13 +148,13 @@ class ConsoleInterface:
                 battle.character.position))
 
         else:
-            string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!!" \
-                     "MUAHAHAHAHAHAHAHA!!!!!" \
-                     "..." \
-                     "I mean... You have been defeated, good luck next time!" \
-                     "PS: You have lost in only " + str(acc) + " interactions..." \
-                                                               "MY GRANNY WOULD SURVIVE BETTER THAN YOU, " \
-                                                               "MUAHAHAHAHA!!!!\n\n"
+            string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n" \
+                     "MUAHAHAHAHAHAHAHA!!!!! \n" \
+                     "...\n" \
+                     "I mean... You have been defeated, good luck next time!\n" \
+                     "PS: You have lost in only " + str(acc) + " interactions..\n." \
+                     "MY GRANNY WOULD SURVIVE BETTER THAN YOU MUAHAHAHAHA!!!!\n\n"
+            print(string)
 
 
 
