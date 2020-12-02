@@ -154,7 +154,8 @@ class ConsoleInterface:
                      "I mean... You have been defeated, good luck next time!" \
                      "PS: You have lost in only " + str(acc) + " interactions..." \
                                                                "MY GRANNY WOULD SURVIVE BETTER THAN YOU, " \
-                                                               "MUAHAHAHAHA!!!!\n\n"" "
+                                                               "MUAHAHAHAHA!!!!\n\n"
+
 
 
     # CHARACTER'S SELECTION
