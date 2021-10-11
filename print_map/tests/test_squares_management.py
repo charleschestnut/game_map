@@ -6,6 +6,7 @@ position_2 = Position(-1, 0)
 position_3 = Position(0, -1)
 position_4 = Position(1, 0)
 position_5 = Position(0, 1)
+position_6 = Position(-2, -2)
 rows_1 = 1
 cols_1 = 1
 
@@ -41,6 +42,9 @@ class MyTestCase(unittest.TestCase):
     def test_incorrect_x_square_right(self):
         self.assertRaises(TypeError, Square, position_3, 1, boardmap_1)
 
+    def test_incorrect_x_square_left(self):
+        self.assertRaises(TypeError, Square, position_6, 1, boardmap_1)
+
     def test_incorrect_y_square_left(self):
         self.assertRaises(TypeError, Square, position_4, 1, boardmap_1)
 
@@ -53,6 +57,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_append_extra_square(self):
         self.assertRaises(TypeError, board_map_3_x_3.append_square, 1)
+
 
 
 if __name__ == '__main__':

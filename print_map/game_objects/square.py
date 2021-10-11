@@ -1,7 +1,7 @@
 class Square:
 
     def __init__(self, position, type, boardmap):
-        if position.x == -1 or position.x >= boardmap.rows:
+        if position.x < 0 or position.x >= boardmap.rows:
             raise TypeError(
                 'Position.X value (' + str(position.x) + ') is out of range (0, ' + str(boardmap.rows) + ')')
         if position.y == -1 or position.y >= boardmap.cols:
@@ -53,19 +53,19 @@ class Square:
 
             else:
                 dice_number -= 1
-                directions = map_square.calc_possible_directions(direction)
+                directions = map_square._calc_possible_directions(direction)
                 for direction_value in directions:
                     map_square.calc_available_squares(map_square, dice_number,
                                                       direction_value, positions)
         else:
             dice_number -= 1
-            directions = map_square.calc_possible_directions(direction)
+            directions = map_square._calc_possible_directions(direction)
             for direction_value in directions:
                 map_square.calc_available_squares(map_square, dice_number,
                                                   direction_value, positions)
         return list(set(positions))
 
-    def calc_possible_directions(self, direction):
+    def _calc_possible_directions(self, direction):
         def remove_opposite_direction(directions, dir):
             if dir == 'L':
                 directions.remove('R')
