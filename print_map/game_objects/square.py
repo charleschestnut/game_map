@@ -50,7 +50,6 @@ class Square:
             map_square = map_square.next_axis_position(direction)
             if dice_number == 0:
                 positions.append(map_square)
-
             else:
                 dice_number -= 1
                 directions = map_square._calc_possible_directions(direction)
