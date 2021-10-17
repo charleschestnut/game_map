@@ -103,7 +103,7 @@ class Game:
                 elif selected_square.type == 4:  # FINISH
                     winner = character
                     break
-                elif selected_square.type == 5:  #
+                elif selected_square.type == 5:  # PORTAL
                     ''
                 elif selected_square.type == 6:  #
                     ''

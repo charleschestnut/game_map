@@ -3,6 +3,12 @@ from .square import Square
 from .monster import Monster
 import random
 
+
+def _check_portal_pass_restrictions(squares):
+    counter = len([1 for square in squares if square == 5])
+    return counter != 1
+
+
 class BoardMap:
     def __init__(self, rows, cols):
         self.rows = rows
@@ -12,9 +18,15 @@ class BoardMap:
 
     def create_squares_of_boardmap(self, squares):
         if len(self.squares) != 0:
-            raise TypeError('The boardmap has all it squares: ' + str(len(self.squares) + 1) +
+            raise TypeError('The boardmap has all it squares: '
+                            + str(len(self.squares) + 1) +
                             '. Please, check them and modify'
                             ' them if you want to append another one.')
+        # We have to check the portals available in the map, they need to be:
+        # Portals != 1
+        if not _check_portal_pass_restrictions(squares):
+            raise TypeError('The boardmap cannot have an unique portal. It needs to '
+                            'have 0 or more than two.')
         for sq in squares:
             self.append_square(sq)
 
