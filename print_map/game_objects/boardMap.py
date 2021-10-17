@@ -43,7 +43,7 @@ class BoardMap:
         self.squares.append(square)
 
     def modify_square(self, x, y, square):
-        index = x * cols + y
+        index = x * self.cols + y
         square.position.x = x
         square.position.y = y
         square.boardmap = self
