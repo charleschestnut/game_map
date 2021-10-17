@@ -1,7 +1,5 @@
 from .position import Position
 from .square import Square
-from .monster import Monster
-import random
 
 
 def _check_portal_pass_restrictions(squares):
