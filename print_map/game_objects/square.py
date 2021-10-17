@@ -8,6 +8,14 @@ class Square:
             raise TypeError('Position.Y value (' + str(position.y) + ') is out of range (0, ' + str(boardmap.cols))
 
         self.position = position
+        # 0: NORMAL
+        # 1: WALL
+        # 2: FAKE WALL
+        # 3: MONSTER
+        # 4: FINISH
+        # 5: PORTAL
+        # 6: CHEST/TREASURE
+        # 7:
         self.type = type
         self.boardmap = boardmap
 
