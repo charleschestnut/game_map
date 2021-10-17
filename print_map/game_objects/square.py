@@ -18,7 +18,7 @@ class Square:
         if self.position.x == other.position.x:
             return self.position.y < other.position.y
         else:
-            self.position.x < other.position.x
+            return self.position.x < other.position.x
 
     def can_move_to_direction(self, direction):
         next_square = None
