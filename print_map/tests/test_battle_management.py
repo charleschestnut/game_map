@@ -1,12 +1,13 @@
+
 import unittest
-from print_map.game_objects import Battle, BoardMap, Character, Weapon, VitalStatus,\
-    Monster, Position, ConsoleInterface, Game
+from print_map.game_objects import Battle, BoardMap, Character, Weapon, VitalStatus, Monster, Game
+
 
 SQUARES = [1, 1, 1, 1, 1, 1, 1, 1, 1,
            1, 4, 0, 0, 0, 0, 0, 0, 1,
            1, 0, 3, 1, 0, 1, 3, 0, 1,
            1, 0, 2, 1, 0, 1, 1, 0, 1,
-           1, 0, 0, 0, 3, 0, 0, 0, 1,
+           1, 0, 0, 0, 3, 0, 0, 5, 1,
            1, 0, 1, 1, 0, 1, 1, 0, 1,
            1, 0, 3, 1, 0, 2, 3, 0, 1,
            1, 0, 0, 0, 0, 0, 0, 5, 1,

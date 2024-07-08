@@ -13,7 +13,7 @@ COLS_1 = 4
 SQUARES_2 = [1,1,1,1,1,1,1,1,1,
              1,4,0,0,0,0,0,0,1,
              1,0,3,1,0,1,3,0,1,
-             1,0,2,1,0,1,1,0,1,
+             1,0,2,1,0,1,1,5,1,
              1,0,0,0,3,0,0,0,1,
              1,0,1,1,0,1,1,0,1,
              1,0,3,1,0,2,3,0,1,
@@ -33,6 +33,8 @@ board_map_9_x_9.create_squares_of_boardmap(SQUARES_2)
 square_1_7_9x9 = board_map_9_x_9.get_square_by_position(1, 7)
 square_4_4_9x9 = board_map_9_x_9.get_square_by_position(4, 4)
 square_6_6_9x9 = board_map_9_x_9.get_square_by_position(6, 6)
+
+
 class MyTestCase(unittest.TestCase):
     def test_get_square_by_position_correct(self):
         square_test_1_2 = board_map_4_x_4_normal.get_square_by_position(1, 2)
