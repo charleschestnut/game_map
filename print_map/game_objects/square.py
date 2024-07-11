@@ -1,11 +1,11 @@
 class Square:
 
     def __init__(self, position, type, boardmap):
-        if position.x < 0 or position.x >= boardmap.rows:
+        if position.x < 0 or position.x >= boardmap.cols:
             raise TypeError(
-                'Position.X value (' + str(position.x) + ') is out of range (0, ' + str(boardmap.rows) + ')')
-        if position.y == -1 or position.y >= boardmap.cols:
-            raise TypeError('Position.Y value (' + str(position.y) + ') is out of range (0, ' + str(boardmap.cols))
+                'Position.X value (' + str(position.x) + ') is out of range (0, ' + str(boardmap.cols) + ')')
+        if position.y == -1 or position.y >= boardmap.rows:
+            raise TypeError('Position.Y value (' + str(position.y) + ') is out of range (0, ' + str(boardmap.rows))
 
         self.position = position
         # 0: NORMAL

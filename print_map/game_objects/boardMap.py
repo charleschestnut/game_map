@@ -17,29 +17,30 @@ class BoardMap:
                             ' them if you want to append another one.')
         # We have to check the portals available in the map, they need to be:
         # Portals != 1
-        if not self._check_portal_pass_restrictions():
+        if not _check_portal_pass_restrictions(squares):
             raise TypeError('The boardmap cannot have an unique portal. It needs to '
                             'have 0 or more than two.')
 
         # We have to check that there's always ONE only start position
-        if not self._check_start_position_restrictions():
+        if not _check_start_position_restrictions(squares):
             raise TypeError('The boardmap must have an unique start position square')
         # We have to check that there's always one or more finish position
-        if not self._check_start_position_restrictions():
+        if not _check_start_position_restrictions(squares):
             raise TypeError('The boardmap must have, at least, one finish position square')
 
         for sq in squares:
             self.append_square(sq)
 
     def append_square(self, square_type):
-
         if len(self.squares) >= self.rows * self.cols:
             raise TypeError('The boardmap has all it squares: ' + str(len(self.squares)) +
                             '. Please, check them and modify'
                             ' them if you want to append another one.')
+        cols = self.cols
+        rows = self.rows
         index = len(self.squares)
-        y = self.rows - 1 - int(index / self.rows)
-        x = index % self.cols
+        x = (index % (cols))
+        y = rows - 1 - (index // cols)
         square = Square(Position(x, y), square_type, self)
         self.squares.append(square)
 
@@ -64,14 +65,16 @@ class BoardMap:
     def get_square_types_list(self):
         return [square.type for square in self.squares]
 
-    def _check_portal_pass_restrictions(self):
-        counter = len([1 for square in self.squares if square == 5])
-        return counter != 1
+def _check_portal_pass_restrictions(squares):
+    counter = len([1 for square in squares if square == 5])
+    return counter != 1
 
-    def _check_start_position_restrictions(self):
-        counter = len([1 for square in self.squares if square == 4])
-        return counter == 1
 
-    def _check_finish_position_restrictions(self):
-        counter = len([1 for square in self.squares if square == 6])
-        return counter >= 1
+def _check_start_position_restrictions(squares):
+    counter = len([1 for square in squares if square == 4])
+    return counter == 1
+
+
+def _check_finish_position_restrictions(squares):
+    counter = len([1 for square in squares if square == 6])
+    return counter >= 1
