@@ -1,7 +1,5 @@
 from .position import Position
 from .square import Square
-from .monster import Monster
-import random
 
 
 class BoardMap:
@@ -66,16 +64,13 @@ class BoardMap:
     def get_square_types_list(self):
         return [square.type for square in self.squares]
 
-
     def _check_portal_pass_restrictions(self):
         counter = len([1 for square in self.squares if square == 5])
         return counter != 1
 
-
     def _check_start_position_restrictions(self):
         counter = len([1 for square in self.squares if square == 4])
         return counter == 1
-
 
     def _check_finish_position_restrictions(self):
         counter = len([1 for square in self.squares if square == 6])
