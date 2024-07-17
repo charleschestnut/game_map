@@ -9,7 +9,7 @@ SQUARES = [1, 1, 1, 1, 1, 1, 1, 1, 1,
            1, 0, 0, 0, 3, 0, 0, 0, 1,
            1, 0, 1, 1, 0, 1, 1, 0, 1,
            1, 0, 3, 1, 0, 2, 3, 0, 1,
-           1, 5, 0, 0, 0, 0, 0, 5, 1,
+           1, 5, 0, 0, 0, 0, 6, 5, 1,
            1, 1, 1, 1, 1, 1, 1, 1, 1]
 ROWS = 9
 COLS = 9
@@ -34,10 +34,12 @@ v_status_monster_3 = VitalStatus(1000, 1000, 1000, 1000, 1000)
 weapon_1 = Weapon("Super sword", "This sword cuts what it wants.", v_status_weapon_1)
 weapon_2 = Weapon("Super shield", "This sword cuts what it wants.", v_status_weapon_2)
 weapon_3 = Weapon("Super hat", "This hat makes you invisible.", v_status_weapon_3)
-weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.", v_status_weapon_4)
+weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.",
+                  v_status_weapon_4)
 weapon_5 = Weapon("Super book", "This book increases your magic power.", v_status_weapon_5)
 weapon_6 = Weapon("Super bow", "This bow throws arrows faster than sound.", v_status_weapon_6)
-weapon_7 = Weapon("Super face", "This face is stronger than any shield built for America Captain.", v_status_weapon_7)
+weapon_7 = Weapon("Super face", "This face is stronger than any shield built for America Captain.",
+                  v_status_weapon_7)
 
 character_1 = Character("Onion knight", False, v_status_character)
 character_2 = Character("Time knight", False, v_status_character)

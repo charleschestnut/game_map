@@ -14,32 +14,31 @@ SQUARES_3 = [2]
 ROWS_3 = 1
 COLS_3 = 1
 
-SQUARES_4 = [1,1,1,1]
+SQUARES_4 = [1, 1, 1, 1]
 ROWS_4 = 2
 COLS_4 = 2
 
-SQUARES_5 = [1,1,1,1,0,1,1,1,1]
+SQUARES_5 = [1, 1, 1, 1, 0, 1, 1, 1, 1]
 ROWS_5 = 3
 COLS_5 = 3
 
-SQUARES_6 = [1,1,1,1,2,1,1,1,1]
+SQUARES_6 = [1, 1, 1, 1, 2, 1, 1, 1, 1]
 ROWS_6 = 3
 COLS_6 = 3
 
-SQUARES_7 = [1,1,1,1,1,1,1,1,1,
-             1,0,0,0,0,0,0,0,1,
-             1,0,0,1,0,1,0,0,1,
-             1,0,1,1,0,1,1,0,1,
-             1,0,0,0,0,0,0,0,1,
-             1,0,1,1,0,1,1,0,1,
-             1,0,0,1,0,1,0,0,1,
-             1,0,0,0,0,0,0,0,1,
-             1,1,1,1,1,1,1,1,1]
+SQUARES_7 = [1, 1, 1, 1, 1, 1, 1, 1, 1,
+             1, 0, 0, 0, 0, 0, 0, 0, 1,
+             1, 0, 0, 1, 0, 1, 0, 0, 1,
+             1, 0, 1, 1, 0, 1, 1, 0, 1,
+             1, 0, 0, 0, 0, 0, 0, 0, 1,
+             1, 0, 1, 1, 0, 1, 1, 0, 1,
+             1, 0, 0, 1, 0, 1, 0, 0, 1,
+             1, 0, 0, 0, 0, 0, 0, 0, 1,
+             1, 1, 1, 1, 1, 1, 1, 1, 1]
 ROWS_7 = 9
 COLS_7 = 9
 
-
-column_board_map = BoardMap(ROWS_1, COLS_1 )
+column_board_map = BoardMap(ROWS_1, COLS_1)
 empty_board_map = BoardMap(ROWS_2, COLS_2)
 fake_column_board_map = BoardMap(ROWS_3, COLS_3)
 map_2_x_2_board = BoardMap(ROWS_4, COLS_4)
@@ -54,6 +53,7 @@ map_2_x_2 = ConsoleInterface.print_map(map_2_x_2_board, SQUARES_4)
 normal_map_3_x_3 = ConsoleInterface.print_map(normal_map_3_x_3_board, SQUARES_5)
 fake_column_3_x_3 = ConsoleInterface.print_map(board_map_3_x_3_fake_column, SQUARES_6)
 normal_map_9_x_9 = ConsoleInterface.print_map(board_map_9_x_9_normal, SQUARES_7)
+
 
 class MyTestCase(unittest.TestCase):
     def test_column(self):
@@ -87,5 +87,4 @@ class MyTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
-
     unittest.main()

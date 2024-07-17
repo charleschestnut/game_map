@@ -42,11 +42,6 @@ class MyTestCase(unittest.TestCase):
         v_status = VitalStatus(10, 3, 4, 6, 20, status_proportion, -1)
         self.assertIsNotNone(v_status)
 
-    def test_negative_extra_level(self):
-        status_proportion = [0.5, 0.5, 0.7, 0.9, 0.8]
-        v_status = VitalStatus(10, 3, 4, 6, 20, status_proportion, -1)
-        self.assertIsNotNone(v_status)
-
     def test_get_vital_status_level_one(self):
         status_proportion = [0.5, 0.5, 0.7, 0.9, 0.8]
         v_status = VitalStatus(10, 10, 10, 10, 10, status_proportion, 0)
@@ -56,7 +51,6 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(v_status.magic_power, status_level_one.magic_power)
         self.assertEqual(v_status.magic_defense, status_level_one.magic_defense)
         self.assertEqual(v_status.defense, status_level_one.defense)
-
 
     def test_get_vital_status_level_two(self):
         status_proportion = [0.5, 0.5, 0.7, 0.9, 0.8]

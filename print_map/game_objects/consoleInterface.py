@@ -92,15 +92,20 @@ class ConsoleInterface:
             if square.type == 0:
                 str_input += "Square number " + str(acc) + ": " + str(square.position) + ' \n'
             elif square.type == 3:
-                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a monster.\n"
+                str_input += ("Square number " + str(acc) + ": " + str(square.position) +
+                              " - There's a monster.\n")
             elif square.type == 4:
-                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a portal.\n"
+                str_input += ("Square number " + str(acc) + ": " + str(square.position) +
+                              " - This is your start position of the game\n")
             elif square.type == 5:
-                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - YOU CAN WIN!.\n"
+                str_input += ("Square number " + str(acc) + ": " + str(square.position) +
+                              " - There's a portal.\n")
             elif square.type == 6:
-                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a 6.\n"
+                str_input += ("Square number " + str(acc) + ": " + str(square.position) +
+                              " - YOU CAN WIN!.\n")
             elif square.type == 7:
-                str_input += "Square number " + str(acc) + ": " + str(square.position) + " - There's a 7.\n"
+                str_input += ("Square number " + str(acc) + ": " + str(square.position) +
+                              " - There's a 7.\n")
             acc += 1
 
         index = input(str_input)
@@ -233,12 +238,12 @@ def get_wall_type(actual, left, top, right, bottom):
         return 'M'
     elif actual == 4:  # Start point
         return 'S'
-    elif actual == 5:  # Finish point
-        return 'F'
-    elif actual == 6:  # Treasure
-        return 'T'
-    elif actual == 7:  # Portal
+    elif actual == 5:  # PORTAL
         return 'P'
+    elif actual == 6:  # FINISH POINT
+        return 'F'
+    elif actual == 7:  # TREASURE
+        return 'T'
 
     elif actual == 1:
         return get_normal_wall([left, top, right, bottom])
