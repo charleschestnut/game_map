@@ -29,7 +29,8 @@ class MyTestCase(unittest.TestCase):
         self.assertRaises(Exception, Weapon, name_weapon_1, description_weapon_1, None)
 
     def test_create_v_status_wrong_instance(self):
-        self.assertRaises(Exception, Weapon, name_weapon_1, description_weapon_1, "I'm not a v_status")
+        self.assertRaises(Exception, Weapon, name_weapon_1, description_weapon_1,
+                          "I'm not a v_status")
 
 
 if __name__ == '__main__':

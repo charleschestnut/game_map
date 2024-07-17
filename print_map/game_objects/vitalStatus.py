@@ -1,6 +1,7 @@
 class VitalStatus:
 
-    def __init__(self, health, attack, magic_power, defense, magic_defense, status_proportion=None, extra_level=None):
+    def __init__(self, health, attack, magic_power, defense, magic_defense, status_proportion=None,
+                 extra_level=None):
 
         for state in [health, attack, magic_power, defense, magic_defense]:
             if not state:
@@ -14,7 +15,8 @@ class VitalStatus:
         if status_proportion:
             if len(status_proportion) != 5:
                 raise Exception(
-                    "Upgrade list must content 5 elements: hp, attack, magic power, defense and magic defense.")
+                    "Upgrade list must content 5 elements: hp, attack, magic power, "
+                    "defense and magic defense.")
             for upgrade in status_proportion:
                 if not upgrade:
                     raise Exception("Sorry, there's an upgrade that is None.")
@@ -38,11 +40,11 @@ class VitalStatus:
             self.extra_level = 0
 
     def __str__(self):
-        res = 'HP: '+str(self.health)+'\n'+'ATK: '\
-        +str(self.attack)+'\n'+'M. PWR: '\
-        +str(self.magic_power)+'\n'\
-        +'DEF: '+str(self.defense)+'\n'\
-        +'M.DEF: '+str(self.magic_defense)
+        res = ('HP: ' + str(self.health) + '\n'
+               + 'ATK: ' + str(self.attack) + '\n'
+               + 'M. PWR: ' + str(self.magic_power) + '\n'
+               + 'DEF: ' + str(self.defense) + '\n'
+               + 'M.DEF: ' + str(self.magic_defense))
         return res
 
     def get_vital_status_at_level(self, level):

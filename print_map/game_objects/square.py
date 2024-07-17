@@ -3,9 +3,11 @@ class Square:
     def __init__(self, position, type, boardmap):
         if position.x < 0 or position.x >= boardmap.cols:
             raise TypeError(
-                'Position.X value (' + str(position.x) + ') is out of range (0, ' + str(boardmap.cols) + ')')
+                'Position.X value (' + str(position.x) + ') is out of range (0, ' +
+                str(boardmap.cols) + ')')
         if position.y == -1 or position.y >= boardmap.rows:
-            raise TypeError('Position.Y value (' + str(position.y) + ') is out of range (0, ' + str(boardmap.rows))
+            raise TypeError('Position.Y value (' + str(position.y) + ') is out of range (0, '
+                            + str(boardmap.rows))
 
         self.position = position
         # 0: NORMAL
@@ -31,7 +33,7 @@ class Square:
     def can_move_to_direction(self, direction):
         next_square = None
         if direction == 'L':
-            next_square = self.boardmap.get_square_by_position(self.position.x - 1, self.position.y)  # TODO
+            next_square = self.boardmap.get_square_by_position(self.position.x - 1, self.position.y)
         elif direction == 'R':
             next_square = self.boardmap.get_square_by_position(self.position.x + 1, self.position.y)
         elif direction == 'T':

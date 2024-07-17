@@ -25,7 +25,7 @@ class BoardMap:
         if not _check_start_position_restrictions(squares):
             raise TypeError('The boardmap must have an unique start position square')
         # We have to check that there's always one or more finish position
-        if not _check_start_position_restrictions(squares):
+        if not _check_finish_position_restrictions(squares):
             raise TypeError('The boardmap must have, at least, one finish position square')
 
         for sq in squares:

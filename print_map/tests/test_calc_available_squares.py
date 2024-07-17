@@ -44,14 +44,9 @@ class MyTestCase(unittest.TestCase):
         square_test_1_2 = board_map_4_x_4_normal.get_square_by_position(4, 4)
         self.assertIsNone(square_test_1_2)
 
-    '''def test_get_square_by_position_out_range_2(self):
-        square_test_1_1 = board_map_4_x_4_normal.get_square_by_position(1, 1)
-        self.assertEqual(square_1_1, square_test_1_1)
-    
-    def test_get_square_by_position_out_range_3(self):
-        square_test_1_1 = board_map_4_x_4_normal.get_square_by_position(1, 1)
-        self.assertEqual(square_1_1, square_test_1_1)'''
-
+    def test_get_square_by_position_out_range_2(self):
+        square_test_1_1 = board_map_4_x_4_normal.get_square_by_position(5, 5)
+        self.assertIsNone(square_test_1_1)
 
     def test_can_not_move_to_direction_left(self):
         can_move = square_1_2.can_move_to_direction('L')

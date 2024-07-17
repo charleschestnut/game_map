@@ -23,7 +23,7 @@ class Game:
                 character.game = self
                 character.set_start_position()
         else:
-            raise(Exception, 'To append a character to the game, use a character instance')
+            raise (Exception, 'To append a character to the game, use a character instance')
 
     def append_character_list(self, character_list):
         if character_list:
@@ -79,7 +79,8 @@ class Game:
     def has_any_character_won(self):
         has_won = False
         for character in self.characters_alive:
-            square_character = self.board_map.get_square_by_position(character.position.x, character.position.y)
+            square_character = self.board_map.get_square_by_position(
+                character.position.x, character.position.y)
             if square_character.type == 5:
                 has_won = True
                 break
@@ -91,7 +92,9 @@ class Game:
         while len(self.characters_alive) > 0 or not self.has_any_character_won:
             for character in self.characters_alive:
                 ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
-                actual_square = self.board_map.get_square_by_position(character.position.x, character.position.y)
+                actual_square = self.board_map.get_square_by_position(
+                    character.position.x, character.position.y)
+                print(f"YOUR CURRENT POSITION IS {character.position}")
                 dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
                 available_squares = actual_square.get_available_squares(dice)
                 selected_square = ConsoleInterface.select_available_squares(available_squares)
@@ -100,13 +103,13 @@ class Game:
                     battle = Battle(character)
                     has_won, rounds = battle.realise()
                     ConsoleInterface.print_finish_battle(battle, has_won, rounds)
-                elif selected_square.type == 4:  # FINISH
-                    winner = character
-                    break
+                elif selected_square.type == 4:  # START POSITION
+                    ''
                 elif selected_square.type == 5:  # PORTAL
                     ''
-                elif selected_square.type == 6:  #
-                    ''
+                elif selected_square.type == 6:  # FINISH
+                    winner = character
+                    break
                 elif selected_square.type == 7:  #
                     ''
         ConsoleInterface.finish_game(self, winner)
@@ -117,7 +120,8 @@ class Game:
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
                 ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
-                actual_square = self.board_map.get_square_by_position(character.position.x, character.position.y)
+                actual_square = self.board_map.get_square_by_position(
+                    character.position.x, character.position.y)
                 dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
                 available_squares = actual_square.get_available_squares(dice)
                 selected_square = ConsoleInterface.select_available_squares(available_squares)
