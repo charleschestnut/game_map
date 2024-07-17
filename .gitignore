@@ -1,4 +1,4 @@
 /.project
 __pycache__
 *.pyc
-/.idea
+.idea/
