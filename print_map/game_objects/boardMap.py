@@ -7,7 +7,9 @@ class BoardMap:
         self.rows = rows
         self.cols = cols
         self.squares = []
-        self.game = None
+
+    def get_portals(self):
+        return [square.position for square in self.squares if square.type == 5]
 
     def create_squares_of_boardmap(self, squares):
         if len(self.squares) != 0:
@@ -64,6 +66,7 @@ class BoardMap:
 
     def get_square_types_list(self):
         return [square.type for square in self.squares]
+
 
 def _check_portal_pass_restrictions(squares):
     counter = len([1 for square in squares if square == 5])
