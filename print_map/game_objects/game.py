@@ -4,11 +4,12 @@ from .monster import Monster
 from .weapon import Weapon
 from .consoleInterface import ConsoleInterface
 from .battle import Battle
+from .boardMap import BoardMap
 import random
 
 
 class Game:
-    def __init__(self, board_map):
+    def __init__(self, board_map: BoardMap):
         self.board_map = board_map
         self.characters = []
         self.characters_alive = []
@@ -81,7 +82,7 @@ class Game:
         for character in self.characters_alive:
             square_character = self.board_map.get_square_by_position(
                 character.position.x, character.position.y)
-            if square_character.type == 5:
+            if square_character.type == 6:
                 has_won = True
                 break
         return has_won
@@ -89,16 +90,9 @@ class Game:
     def start_game_console(self):
         winner = None
         ConsoleInterface.welcome()
-        while len(self.characters_alive) > 0 or not self.has_any_character_won:
+        while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
-                ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
-                actual_square = self.board_map.get_square_by_position(
-                    character.position.x, character.position.y)
-                print(f"YOUR CURRENT POSITION IS {character.position}")
-                dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
-                available_squares = actual_square.get_available_squares(dice)
-                selected_square = ConsoleInterface.select_available_squares(available_squares)
-                character.set_position(selected_square.position)
+                selected_square = self.dice_process(character)
                 if selected_square.type == 3:  # BATTLE
                     battle = Battle(character)
                     has_won, rounds = battle.realise()
@@ -106,9 +100,11 @@ class Game:
                 elif selected_square.type == 4:  # START POSITION
                     ''
                 elif selected_square.type == 5:  # PORTAL
-                    ''
+                    self.portal_process(character)
+
                 elif selected_square.type == 6:  # FINISH
                     winner = character
+                    character.set_position(selected_square.position)
                     break
                 elif selected_square.type == 7:  #
                     ''
@@ -119,15 +115,29 @@ class Game:
         ConsoleInterface.welcome()
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
-                ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
-                actual_square = self.board_map.get_square_by_position(
-                    character.position.x, character.position.y)
-                dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
-                available_squares = actual_square.get_available_squares(dice)
-                selected_square = ConsoleInterface.select_available_squares(available_squares)
-                character.set_position(selected_square.position)
+                selected_square = self.dice_process(character)
 
-                if selected_square.type == 5:
+                if selected_square.type == 5:  # PORTAL
+                    self.portal_process(character)
+                elif selected_square.type == 6:
                     winner = character
+                    character.set_position(selected_square.position)
                     break
         ConsoleInterface.finish_game(self, winner)
+
+    def portal_process(self, character):
+        portals = self.board_map.get_portals()
+        selected_portal = ConsoleInterface.select_available_portal(portals,
+                                                                   character.position)
+        character.set_position(selected_portal)
+
+    def dice_process(self, character):
+        ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
+        actual_square = self.board_map.get_square_by_position(
+            character.position.x, character.position.y)
+        print(f"YOUR CURRENT POSITION IS {character.position}")
+        dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
+        available_squares = actual_square.get_available_squares(dice)
+        selected_square = ConsoleInterface.select_available_squares(available_squares)
+        character.set_position(selected_square.position)
+        return selected_square

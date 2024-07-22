@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 
 class ConsoleInterface:
@@ -147,10 +148,10 @@ class ConsoleInterface:
 
             print(string)
             print('You have won in ' + str(acc) + ' iterations! Congratulations!\n'
-                                                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) +
-                  '.\n Your current status is:\n' + str(battle.character.get_total_vital_status()) + '\n'
-                                                                                                     'Your current position is ' + str(
-                battle.character.position))
+                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) +
+                  '.\n Your current status is:\n' +
+                  str(battle.character.get_total_vital_status()) + '\n'
+                  'Your current position is ' + str(battle.character.position))
 
         else:
             string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n" \
@@ -163,7 +164,42 @@ class ConsoleInterface:
 
 
 
-    # CHARACTER'S SELECTION
+    # PORTAL
+    @staticmethod
+    def select_available_portal(portals: List, character_position):
+        # Remove character position from the portals list
+        portals.remove(character_position)
+        random_portal = random.choice(portals)
+        portal_message = """
+        You have entered into a... PORTAL!
+        
+                    .,-:;//;:=,
+                 . :H@@@MM@M#H/.,+%;,
+              ,/X+ +M@@M@MM%=,-%HMMM@X/,
+             -+@MM; $M@@MH+-,;XMMMM@MMMM@+-
+            ;@M@@M- XM@X;. -+XXXXXHHH@M@M#@/.
+          ,%MM@@MH ,@%=            .---=-=:=,.
+          -@#@@@MX .,              -%HX$$%%%+;
+         =-./@M@M$                  .;@MMMM@MM:
+         X@/ -$MM/                    .+MM@@@M$
+        ,@M@H: :@:                    . -X#@@@@-
+        ,@@@MMX, .                    /H- ;@M@M=
+        .H@@@@M@+,                    %MM+..%#$.
+         /MMMM@MMH/.                  XM@MH; -;
+          /%+%$XHH@$=              , .H@@@@MX,
+           .=--------.           -%H.,@@@@@MX,
+           .%MM@@@HHHXX$$$%+- .:$MMX -M@@MM%.
+             =XMMM@MM@MM#H;,-+HMM@M+ /MMMX=
+               =%@M@M#@$-.=$@MM@@@M; %M%=
+                 ,:+$+-,/H#MMMMMMM@- -,
+                       =++%%%%+/:-.
+        
+        
+        YOU HAVE BEEN TELEPORTED, YOU WERE ON {character_position} POSITION, 
+        BUT YOUR CURRENT POSITION IS ACTUALLY {random_portal}.
+        """.format(character_position=character_position, random_portal=random_portal)
+        print(portal_message)
+        return random_portal
 
     # WIN GAME
     @staticmethod
