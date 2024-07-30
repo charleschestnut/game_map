@@ -1,3 +1,4 @@
+from . import Position
 from .boardMap import BoardMap
 from .vitalStatus import VitalStatus
 from .weapon import Weapon
@@ -12,7 +13,7 @@ class Character:
             raise (Exception, 'The character can not have a None vital status.')
         if uses_magic is None or not isinstance(uses_magic, bool):
             raise (
-            Exception, 'The character can not have a uses_magic instance that is not Boolean')
+                Exception, 'The character can not have a uses_magic instance that is not Boolean')
 
         self.name = name
         self.uses_magic = uses_magic
@@ -25,6 +26,24 @@ class Character:
     def __str__(self):
         return ('Character :' + str(self.name) + ' - Map: ' + str(self.game.board_map) +
                 ' Position: ' + str(self.position))
+
+    def get_name(self):
+        return self.game
+
+    def set_name(self, name: str):
+        self.name = name
+
+    def uses_magics(self):
+        return self.uses_magic
+
+    def set_uses_magic(self, use_magic: bool):
+        self.uses_magic = use_magic
+
+    def get_level(self):
+        return self.level
+
+    def set_level(self, level: int):
+        self.level = level
 
     def get_total_vital_status(self):
         total_vital_status = self.vital_status
@@ -43,7 +62,10 @@ class Character:
             total_vital_status.magic_defense += weapon.vital_status.magic_defense
         return total_vital_status
 
-    def add_weapon(self, weapon):
+    def get_weapons(self):
+        return self.weapons
+
+    def add_weapon(self, weapon: Weapon):
         if not isinstance(weapon, Weapon):
             raise (Exception, 'To add a weapon, use a Weapon instance.')
 
@@ -88,7 +110,10 @@ class Character:
             self.level += new_weapon.vital_status.extra_level - old_weapon.vital_status.extra_level
             self.weapons[weapons_input_int] = new_weapon
 
-    def set_position(self, position):
+    def get_position(self):
+        return self.position
+
+    def set_position(self, position: Position):
         square_to_move = self.game.board_map.get_square_by_position(position.x, position.y)
         if square_to_move.type == 1:
             raise (Exception, 'The character can not move to this position because this square'
@@ -110,3 +135,9 @@ class Character:
     def set_start_position(self):
         if self.game:
             self.position = self.game.board_map.get_start_position()
+
+    def get_game(self):
+        return self.game
+
+    def set_game(self, game):
+        self.game = game
