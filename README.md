@@ -15,14 +15,20 @@ The game consist about one or multiple players that needs to find the exit squar
 ## Project Structure
 
 ### Demos
+There are, right now, two python scripts with two playable demos: 
+- Only walking: The player can throw the dice and moves around the map without enter in any combat/battle. It is finished when any player enters in the Finish Square.
+- Walk and Battle: The players can try every square that they want. 
 ### Game Objects
+There are some Weapons that can be added to our Characters to give them better abilities or increase their status. One of the examples could be: get the ability of crossing fake walls or increase your defenses. 
 ### Tests
-
+There are located the different unit testing for the different classes also testing for printing the boardmap.
 ## Battle Development
-
+- The Battle class simulates a battle between a character and a monster with a possibility of a surprise attack.
+- Damage calculations are influenced by random factors and the respective defenses of the combatants.
+- The outcome of the battle updates the character’s status and the game state based on the result of the combat.
 
 ## Future Implementations:
-- Treasure: This will include a weapon to help the characters increasing their vital status or giving them any ability: cross fake walls of capacity of choose the exit of a teleport.
+- Treasure square: This will include a weapon to help the characters increasing their vital status or giving them any ability: cross fake walls of capacity of choose the exit of a teleport.
 - PRINT MAP: The project needs a better way to make the prints of the map into the shell.
 
 ## Future Enhancements:
