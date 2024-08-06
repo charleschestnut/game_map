@@ -10,11 +10,36 @@ import random
 
 class Game:
     def __init__(self, board_map: BoardMap):
-        self.board_map = board_map
-        self.characters = []
-        self.characters_alive = []
-        self.monsters = []
-        self.weapons = []
+        self._board_map = board_map
+        self._characters = []
+        self._characters_alive = []
+        self._monsters = []
+        self._weapons = []
+
+    # Getter for board_map
+    @property
+    def board_map(self):
+        return self._board_map
+
+    # Getter for characters
+    @property
+    def characters(self):
+        return self._characters
+
+    # Getter for characters_alive
+    @property
+    def characters_alive(self):
+        return self._characters_alive
+
+    # Getter for monsters
+    @property
+    def monsters(self):
+        return self._monsters
+
+    # Getter for weapons
+    @property
+    def weapons(self):
+        return self._weapons
 
     def append_character(self, character):
         if isinstance(character, Character):

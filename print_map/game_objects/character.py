@@ -98,6 +98,10 @@ class Character:
     def game(self):
         return self._game
 
+    @game.setter
+    def game(self, value):
+        self._game = value
+
     def get_total_vital_status(self):
         total_vital_status = self.vital_status
         vital_status_level = self.vital_status.get_vital_status_at_level(
