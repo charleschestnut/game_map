@@ -90,7 +90,7 @@ class ConsoleInterface:
             len(squares) - 1) + '): \n'
         acc = 0
         for square in squares:
-            if square.type_square_square == 0:
+            if square.type_square == 0:
                 str_input += "Square number " + str(acc) + ": " + str(square.position) + ' \n'
             elif square.type_square == 3:
                 str_input += ("Square number " + str(acc) + ": " + str(square.position) +

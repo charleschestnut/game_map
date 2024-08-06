@@ -129,7 +129,7 @@ class Game:
 
                 elif selected_square.type_square == 6:  # FINISH
                     winner = character
-                    character.set_position(selected_square.position)
+                    character.position = selected_square.position
                     break
                 elif selected_square.type_square == 7:  #
                     ''
@@ -146,7 +146,7 @@ class Game:
                     self.portal_process(character)
                 elif selected_square.type_square == 6:
                     winner = character
-                    character.set_position(selected_square.position)
+                    character.position = selected_square.position
                     break
         ConsoleInterface.finish_game(self, winner)
 
@@ -154,7 +154,7 @@ class Game:
         portals = self.board_map.get_portals()
         selected_portal = ConsoleInterface.select_available_portal(portals,
                                                                    character.position)
-        character.set_position(selected_portal)
+        character.position = selected_portal
 
     def dice_process(self, character):
         ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
@@ -164,5 +164,5 @@ class Game:
         dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
         available_squares = actual_square.get_available_squares(dice)
         selected_square = ConsoleInterface.select_available_squares(available_squares)
-        character.set_position(selected_square.position)
+        character.position = (selected_square.position)
         return selected_square
