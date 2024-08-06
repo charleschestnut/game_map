@@ -8,6 +8,33 @@ class BoardMap:
         self.cols = cols
         self.squares = []
 
+    # Getter and setter for rows
+    @property
+    def rows(self):
+        return self._rows
+
+    @rows.setter
+    def rows(self, value):
+        self._rows = value
+
+    # Getter and setter for cols
+    @property
+    def cols(self):
+        return self._cols
+
+    @cols.setter
+    def cols(self, value):
+        self._cols = value
+
+    # Getter and setter for squares
+    @property
+    def squares(self):
+        return self._squares
+
+    @squares.setter
+    def squares(self, value):
+        self._squares = value
+
     def get_portals(self):
         return [square.position for square in self.squares if square.type == 5]
 
@@ -41,7 +68,7 @@ class BoardMap:
         cols = self.cols
         rows = self.rows
         index = len(self.squares)
-        x = (index % (cols))
+        x = (index % cols)
         y = rows - 1 - (index // cols)
         square = Square(Position(x, y), square_type, self)
         self.squares.append(square)
