@@ -6,7 +6,7 @@ import random
 
 class Battle:
     def __init__(self, character: Character):
-        if not character:
+        if not character or not isinstance(character, Character):
             raise (Exception, '')
 
         self._is_surprise = bool(random.getrandbits(1))

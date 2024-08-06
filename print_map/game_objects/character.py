@@ -7,14 +7,13 @@ from .weapon import Weapon
 class Character:
 
     def __init__(self, name: str, uses_magic: bool, vital_status: VitalStatus):
-        if not name:
+        if not name or not isinstance(name, str):
             raise (Exception, 'The character can not have a None name.')
-        if not vital_status:
+        if not vital_status or not isinstance(vital_status, VitalStatus):
             raise (Exception, 'The character can not have a None vital status.')
-        if uses_magic is None:
+        if uses_magic is None or not isinstance(uses_magic, bool):
             raise (
                 Exception, 'The character can not have a uses_magic instance that is not Boolean')
-
         self._name = name
         self._uses_magic = uses_magic
         self._vital_status = vital_status
@@ -77,7 +76,7 @@ class Character:
                               ' with position ' + str(position) +
                    ' is a fake wall and the level is '
                    + str(self.level) + '. The character need to have a higher level.')
-        self.position = position
+        self._position = position
 
     # Getter and setter for level
     @property

@@ -161,7 +161,7 @@ class MyTestCase(unittest.TestCase):
             position_2 = Position(4, 4)
             character = Character(character_name_1, uses_magic, v_status_character)
             game.append_character(character)
-            character.set_position(position_2)
+            character.position = position_2
         except:
             raises = True
         self.assertFalse(raises)
@@ -171,7 +171,7 @@ class MyTestCase(unittest.TestCase):
         try:
             position_true_wall = Position(0, 0)
             character = Character(character_name_1, doesnt_use_magic, v_status_character)
-            character.set_position(position_true_wall)
+            character.position = position_true_wall
         except:
             raises = True
         self.assertTrue(raises)
@@ -183,7 +183,7 @@ class MyTestCase(unittest.TestCase):
             character = Character(character_name_1, uses_magic, v_status_character)
             game.append_character(character)
             character.level = 3
-            character.set_position(position_fake_wall)
+            character.position = position_fake_wall
         except:
             raises = True
         self.assertFalse(raises)
@@ -193,7 +193,7 @@ class MyTestCase(unittest.TestCase):
         try:
             position_fake_wall = Position(2, 5)
             character = Character(character_name_1, doesnt_use_magic, v_status_character)
-            character.set_position(position_fake_wall)
+            character.position = position_fake_wall
         except:
             raises = True
         self.assertTrue(raises)

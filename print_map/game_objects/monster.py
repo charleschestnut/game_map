@@ -4,6 +4,16 @@ from .weapon import Weapon
 
 class Monster:
     def __init__(self, name: str, uses_magic: bool, vital_status: VitalStatus, weapon=None):
+        if not name or not isinstance(name, str):
+            raise (Exception, 'Can not create a Monster without name, it also needs to be an '
+                              'string.')
+
+        if not vital_status or not isinstance(vital_status, VitalStatus):
+            raise (Exception, 'Vital status of the monster needs to be a VitalStatus instance.')
+        if uses_magic is None or not isinstance(uses_magic, bool):
+            raise (Exception, 'The uses_magic attribute of the monster needs to be a Boolean.')
+        if weapon and not isinstance(weapon, Weapon):
+            raise (Exception, 'Weapon of the monster needs to be a Weapon instance.')
         self._name = name
         self._uses_magic = uses_magic
         self._vital_status = vital_status

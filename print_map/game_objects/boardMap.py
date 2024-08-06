@@ -4,6 +4,8 @@ from .square import Square
 
 class BoardMap:
     def __init__(self, rows, cols):
+        if rows <= 0 or cols <= 0:
+            raise (Exception, 'Can not create a Boardmap with rows or columns lower than ZERO (0)')
         self._rows = rows
         self._cols = cols
         self._squares = []
