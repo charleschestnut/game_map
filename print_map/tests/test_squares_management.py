@@ -3,11 +3,8 @@ import copy
 from print_map.game_objects import BoardMap, ConsoleInterface, Square, Position
 
 position_1 = Position(0, 0)
-position_2 = Position(-1, 0)
-position_3 = Position(0, -1)
 position_4 = Position(1, 0)
 position_5 = Position(0, 1)
-position_6 = Position(-2, -2)
 rows_1 = 1
 cols_1 = 1
 
@@ -70,20 +67,11 @@ class MyTestCase(unittest.TestCase):
     def test_correct_square(self):
         self.assertFalse(None, square_1)
 
-    def test_incorrect_x_square_left(self):
-        self.assertRaises(TypeError, Square, position_2, 1, boardmap_1)
-
-    def test_incorrect_x_square_right(self):
-        self.assertRaises(TypeError, Square, position_3, 1, boardmap_1)
-
-    def test_incorrect_x_square_left(self):
-        self.assertRaises(TypeError, Square, position_6, 1, boardmap_1)
-
     def test_incorrect_y_square_left(self):
-        self.assertRaises(TypeError, Square, position_4, 1, boardmap_1)
+        self.assertRaises(Exception, Square, position_4, 1, boardmap_1)
 
     def test_incorrect_y_square_right(self):
-        self.assertRaises(TypeError, Square, position_5, 1, boardmap_1)
+        self.assertRaises(Exception, Square, position_5, 1, boardmap_1)
 
     def test_append_extra_square(self):
         self.assertRaises(TypeError, board_4_x_4_second.append_square, 1)

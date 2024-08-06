@@ -90,21 +90,21 @@ class ConsoleInterface:
             len(squares) - 1) + '): \n'
         acc = 0
         for square in squares:
-            if square.type == 0:
+            if square.type_square_square == 0:
                 str_input += "Square number " + str(acc) + ": " + str(square.position) + ' \n'
-            elif square.type == 3:
+            elif square.type_square == 3:
                 str_input += ("Square number " + str(acc) + ": " + str(square.position) +
                               " - There's a monster.\n")
-            elif square.type == 4:
+            elif square.type_square == 4:
                 str_input += ("Square number " + str(acc) + ": " + str(square.position) +
                               " - This is your start position of the game\n")
-            elif square.type == 5:
+            elif square.type_square == 5:
                 str_input += ("Square number " + str(acc) + ": " + str(square.position) +
                               " - There's a portal.\n")
-            elif square.type == 6:
+            elif square.type_square == 6:
                 str_input += ("Square number " + str(acc) + ": " + str(square.position) +
                               " - YOU CAN WIN!.\n")
-            elif square.type == 7:
+            elif square.type_square == 7:
                 str_input += ("Square number " + str(acc) + ": " + str(square.position) +
                               " - There's a 7.\n")
             acc += 1

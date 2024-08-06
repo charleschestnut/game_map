@@ -68,10 +68,10 @@ class Character:
     @position.setter
     def position(self, position: Position):
         square_to_move = self.game.board_map.get_square_by_position(position.x, position.y)
-        if square_to_move.type == 1:
+        if square_to_move.type_square == 1:
             raise (Exception, 'The character can not move to this position because this square'
                               ' with position ' + str(position) + ' is a wall.')
-        if square_to_move.type == 2 and self.level < 3:
+        if square_to_move.type_square == 2 and self.level < 3:
             raise (Exception, 'The character can not move to this position because this square'
                               ' with position ' + str(position) +
                    ' is a fake wall and the level is '

@@ -107,7 +107,7 @@ class Game:
         for character in self.characters_alive:
             square_character = self.board_map.get_square_by_position(
                 character.position.x, character.position.y)
-            if square_character.type == 6:
+            if square_character.type_square == 6:
                 has_won = True
                 break
         return has_won
@@ -118,20 +118,20 @@ class Game:
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
                 selected_square = self.dice_process(character)
-                if selected_square.type == 3:  # BATTLE
+                if selected_square.type_square == 3:  # BATTLE
                     battle = Battle(character)
                     has_won, rounds = battle.realise()
                     ConsoleInterface.print_finish_battle(battle, has_won, rounds)
-                elif selected_square.type == 4:  # START POSITION
+                elif selected_square.type_square == 4:  # START POSITION
                     ''
-                elif selected_square.type == 5:  # PORTAL
+                elif selected_square.type_square == 5:  # PORTAL
                     self.portal_process(character)
 
-                elif selected_square.type == 6:  # FINISH
+                elif selected_square.type_square == 6:  # FINISH
                     winner = character
                     character.set_position(selected_square.position)
                     break
-                elif selected_square.type == 7:  #
+                elif selected_square.type_square == 7:  #
                     ''
         ConsoleInterface.finish_game(self, winner)
 
@@ -142,9 +142,9 @@ class Game:
             for character in self.characters_alive:
                 selected_square = self.dice_process(character)
 
-                if selected_square.type == 5:  # PORTAL
+                if selected_square.type_square == 5:  # PORTAL
                     self.portal_process(character)
-                elif selected_square.type == 6:
+                elif selected_square.type_square == 6:
                     winner = character
                     character.set_position(selected_square.position)
                     break

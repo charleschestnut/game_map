@@ -38,7 +38,7 @@ class BoardMap:
         self._squares = value
 
     def get_portals(self):
-        return [square.position for square in self.squares if square.type == 5]
+        return [square.position for square in self.squares if square.type_square == 5]
 
     def create_squares_of_boardmap(self, squares):
         if len(self.squares) != 0:
@@ -62,7 +62,7 @@ class BoardMap:
         for sq in squares:
             self.append_square(sq)
 
-    def append_square(self, square_type):
+    def append_square(self, square_type_square):
         if len(self.squares) >= self.rows * self.cols:
             raise TypeError('The boardmap has all it squares: ' + str(len(self.squares)) +
                             '. Please, check them and modify'
@@ -72,7 +72,7 @@ class BoardMap:
         index = len(self.squares)
         x = (index % cols)
         y = rows - 1 - (index // cols)
-        square = Square(Position(x, y), square_type, self)
+        square = Square(Position(x, y), square_type_square, self)
         self.squares.append(square)
 
     def modify_square(self, x, y, square):
@@ -90,11 +90,11 @@ class BoardMap:
 
     def get_start_position(self):
         for square in self.squares:
-            if square.type == 4:
+            if square.type_square == 4:
                 return square.position
 
     def get_square_types_list(self):
-        return [square.type for square in self.squares]
+        return [square.type_square for square in self.squares]
 
 
 def _check_portal_pass_restrictions(squares):

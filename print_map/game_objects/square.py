@@ -1,28 +1,57 @@
+from .position import Position
+
+
 class Square:
 
-    def __init__(self, position, type, boardmap):
-        if position.x < 0 or position.x >= boardmap.cols:
-            raise TypeError(
-                'Position.X value (' + str(position.x) + ') is out of range (0, ' +
-                str(boardmap.cols) + ')')
-        if position.y == -1 or position.y >= boardmap.rows:
-            raise TypeError('Position.Y value (' + str(position.y) + ') is out of range (0, '
-                            + str(boardmap.rows))
+    @property
+    def boardmap(self):
+        return self._boardmap
 
-        self.position = position
-        # 0: NORMAL
-        # 1: WALL
-        # 2: FAKE WALL
-        # 3: MONSTER
-        # 4: FINISH
-        # 5: PORTAL
-        # 6: CHEST/TREASURE
-        # 7:
-        self.type = type
-        self.boardmap = boardmap
+    def __init__(self, position, type_square, boardmap):
+        if (not isinstance(position, Position) or position.x >= boardmap.cols or
+                position.y >= boardmap.rows):
+            raise Exception("Position is not a valid position instance")
+        elif type_square not in range(8):
+            raise Exception("The valid types of square are between 0 and 8")
+
+        self._position = position
+        self._type_square = type_square
+        self._boardmap = boardmap
+
+    @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, position):
+        if position.x >= self._boardmap.cols:
+            raise ValueError(
+                f'Position.X value ({position.x}) is out of range (0, {self._boardmap.cols})')
+        if position.y >= self._boardmap.rows:
+            raise ValueError(
+                f'Position.Y value ({position.y}) is out of range (0, {self._boardmap.rows})')
+        self._position = position
+
+    @property
+    def type_square(self):
+        return self._type_square
+
+    @type_square.setter
+    def type_square(self, value):
+        if value not in range(8):  # Assuming type should be between 0 and 7 inclusive
+            raise ValueError(f'Invalid type value: {value}')
+        self._type_square = value
+
+    @property
+    def boardmap(self):
+        return self._boardmap
+
+    @boardmap.setter
+    def boardmap(self, value):
+        self._boardmap = value
 
     def __str__(self):
-        return str(self.position) + ' - type: ' + str(self.type)
+        return str(self.position) + ' - type_square: ' + str(self.type_square)
 
     def __lt__(self, other):
         if self.position.x == other.position.x:
@@ -41,9 +70,9 @@ class Square:
         elif direction == 'B':
             next_square = self.boardmap.get_square_by_position(self.position.x, self.position.y - 1)
 
-        if next_square.type == 1:
+        if next_square.type_square == 1:
             return False
-        elif next_square.type == 2:
+        elif next_square.type_square == 2:
             # Ver si el personaje de la casilla tiene o no el objeto posible para el movimiento
             # Mientras tanto, hace el mismo efecto que si es una pared normal
             return False
@@ -62,19 +91,19 @@ class Square:
                 positions.append(map_square)
             else:
                 dice_number -= 1
-                directions = map_square._calc_possible_directions(direction)
+                directions = map_square.calc_possible_directions(direction)
                 for direction_value in directions:
                     map_square.calc_available_squares(map_square, dice_number,
                                                       direction_value, positions)
         else:
             dice_number -= 1
-            directions = map_square._calc_possible_directions(direction)
+            directions = map_square.calc_possible_directions(direction)
             for direction_value in directions:
                 map_square.calc_available_squares(map_square, dice_number,
                                                   direction_value, positions)
         return list(set(positions))
 
-    def _calc_possible_directions(self, direction):
+    def calc_possible_directions(self, direction):
         def remove_opposite_direction(directions, dir):
             if dir == 'L':
                 directions.remove('R')
