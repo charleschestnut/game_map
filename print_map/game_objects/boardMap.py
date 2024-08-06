@@ -4,9 +4,9 @@ from .square import Square
 
 class BoardMap:
     def __init__(self, rows, cols):
-        self.rows = rows
-        self.cols = cols
-        self.squares = []
+        self._rows = rows
+        self._cols = cols
+        self._squares = []
 
     # Getter and setter for rows
     @property

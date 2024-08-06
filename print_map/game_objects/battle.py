@@ -9,11 +9,11 @@ class Battle:
         if not character:
             raise (Exception, '')
 
-        self.is_surprise = bool(random.getrandbits(1))
+        self._is_surprise = bool(random.getrandbits(1))
         self._dice_damage = round(random.uniform(-0.5, 0.5), 1)
-        self.character = character
-        self.monster = character.game.get_random_monster()
-        self.has_won = False
+        self._character = character
+        self._monster = character.game.get_random_monster()
+        self._has_won = False
 
     # Getter and setter for is_surprise
     @property
