@@ -4,12 +4,41 @@ from .square import Square
 
 class BoardMap:
     def __init__(self, rows, cols):
-        self.rows = rows
-        self.cols = cols
-        self.squares = []
+        if rows <= 0 or cols <= 0:
+            raise (Exception, 'Can not create a Boardmap with rows or columns lower than ZERO (0)')
+        self._rows = rows
+        self._cols = cols
+        self._squares = []
+
+    # Getter and setter for rows
+    @property
+    def rows(self):
+        return self._rows
+
+    @rows.setter
+    def rows(self, value):
+        self._rows = value
+
+    # Getter and setter for cols
+    @property
+    def cols(self):
+        return self._cols
+
+    @cols.setter
+    def cols(self, value):
+        self._cols = value
+
+    # Getter and setter for squares
+    @property
+    def squares(self):
+        return self._squares
+
+    @squares.setter
+    def squares(self, value):
+        self._squares = value
 
     def get_portals(self):
-        return [square.position for square in self.squares if square.type == 5]
+        return [square.position for square in self.squares if square.type_square == 5]
 
     def create_squares_of_boardmap(self, squares):
         if len(self.squares) != 0:
@@ -33,7 +62,7 @@ class BoardMap:
         for sq in squares:
             self.append_square(sq)
 
-    def append_square(self, square_type):
+    def append_square(self, square_type_square):
         if len(self.squares) >= self.rows * self.cols:
             raise TypeError('The boardmap has all it squares: ' + str(len(self.squares)) +
                             '. Please, check them and modify'
@@ -41,9 +70,9 @@ class BoardMap:
         cols = self.cols
         rows = self.rows
         index = len(self.squares)
-        x = (index % (cols))
+        x = (index % cols)
         y = rows - 1 - (index // cols)
-        square = Square(Position(x, y), square_type, self)
+        square = Square(Position(x, y), square_type_square, self)
         self.squares.append(square)
 
     def modify_square(self, x, y, square):
@@ -61,11 +90,11 @@ class BoardMap:
 
     def get_start_position(self):
         for square in self.squares:
-            if square.type == 4:
+            if square.type_square == 4:
                 return square.position
 
     def get_square_types_list(self):
-        return [square.type for square in self.squares]
+        return [square.type_square for square in self.squares]
 
 
 def _check_portal_pass_restrictions(squares):

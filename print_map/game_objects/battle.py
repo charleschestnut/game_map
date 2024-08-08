@@ -1,18 +1,60 @@
+from . import VitalStatus
 from .character import Character
 from .monster import Monster
 import random
 
 
 class Battle:
-    def __init__(self, character):
+    def __init__(self, character: Character):
         if not character or not isinstance(character, Character):
             raise (Exception, '')
 
-        self.is_surprise = bool(random.getrandbits(1))
-        self.dice_damage = round(random.uniform(-0.5, 0.5), 1)
-        self.character = character
-        self.monster = character.game.get_random_monster()
-        self.has_won = False
+        self._is_surprise = bool(random.getrandbits(1))
+        self._dice_damage = round(random.uniform(-0.5, 0.5), 1)
+        self._character = character
+        self._monster = character.game.get_random_monster()
+        self._has_won = False
+
+    # Getter and setter for is_surprise
+    @property
+    def is_surprise(self):
+        return self._is_surprise
+
+    @is_surprise.setter
+    def is_surprise(self, value):
+        self._is_surprise = value
+
+    # Getter and setter for dice_damage
+    @property
+    def dice_damage(self):
+        return self._dice_damage
+
+    # Getter and setter for character
+    @property
+    def character(self):
+        return self._character
+
+    @character.setter
+    def character(self, value):
+        self._character = value
+
+    # Getter and setter for monster
+    @property
+    def monster(self):
+        return self._monster
+
+    @monster.setter
+    def monster(self, value):
+        self._monster = value
+
+    # Getter and setter for has_won
+    @property
+    def has_won(self):
+        return self._has_won
+
+    @has_won.setter
+    def has_won(self, value):
+        self._has_won = value
 
     def realise(self):
         character_hp = self.character.vital_status.health
@@ -39,7 +81,7 @@ class Battle:
         has_won = self.finish_battle(character_hp)
         return has_won, acc
 
-    def get_damages_in_battle(self, character_status):
+    def get_damages_in_battle(self, character_status: VitalStatus):
         if self.character.uses_magic:
             character_damage = int(character_status.magic_power * self.dice_damage)\
                             - self.monster.vital_status.magic_defense

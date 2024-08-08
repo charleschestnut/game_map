@@ -10,11 +10,36 @@ import random
 
 class Game:
     def __init__(self, board_map: BoardMap):
-        self.board_map = board_map
-        self.characters = []
-        self.characters_alive = []
-        self.monsters = []
-        self.weapons = []
+        self._board_map = board_map
+        self._characters = []
+        self._characters_alive = []
+        self._monsters = []
+        self._weapons = []
+
+    # Getter for board_map
+    @property
+    def board_map(self):
+        return self._board_map
+
+    # Getter for characters
+    @property
+    def characters(self):
+        return self._characters
+
+    # Getter for characters_alive
+    @property
+    def characters_alive(self):
+        return self._characters_alive
+
+    # Getter for monsters
+    @property
+    def monsters(self):
+        return self._monsters
+
+    # Getter for weapons
+    @property
+    def weapons(self):
+        return self._weapons
 
     def append_character(self, character):
         if isinstance(character, Character):
@@ -82,7 +107,7 @@ class Game:
         for character in self.characters_alive:
             square_character = self.board_map.get_square_by_position(
                 character.position.x, character.position.y)
-            if square_character.type == 6:
+            if square_character.type_square == 6:
                 has_won = True
                 break
         return has_won
@@ -93,20 +118,20 @@ class Game:
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
                 selected_square = self.dice_process(character)
-                if selected_square.type == 3:  # BATTLE
+                if selected_square.type_square == 3:  # BATTLE
                     battle = Battle(character)
                     has_won, rounds = battle.realise()
                     ConsoleInterface.print_finish_battle(battle, has_won, rounds)
-                elif selected_square.type == 4:  # START POSITION
+                elif selected_square.type_square == 4:  # START POSITION
                     ''
-                elif selected_square.type == 5:  # PORTAL
+                elif selected_square.type_square == 5:  # PORTAL
                     self.portal_process(character)
 
-                elif selected_square.type == 6:  # FINISH
+                elif selected_square.type_square == 6:  # FINISH
                     winner = character
-                    character.set_position(selected_square.position)
+                    character.position = selected_square.position
                     break
-                elif selected_square.type == 7:  #
+                elif selected_square.type_square == 7:  #
                     ''
         ConsoleInterface.finish_game(self, winner)
 
@@ -117,11 +142,11 @@ class Game:
             for character in self.characters_alive:
                 selected_square = self.dice_process(character)
 
-                if selected_square.type == 5:  # PORTAL
+                if selected_square.type_square == 5:  # PORTAL
                     self.portal_process(character)
-                elif selected_square.type == 6:
+                elif selected_square.type_square == 6:
                     winner = character
-                    character.set_position(selected_square.position)
+                    character.position = selected_square.position
                     break
         ConsoleInterface.finish_game(self, winner)
 
@@ -129,7 +154,7 @@ class Game:
         portals = self.board_map.get_portals()
         selected_portal = ConsoleInterface.select_available_portal(portals,
                                                                    character.position)
-        character.set_position(selected_portal)
+        character.position = selected_portal
 
     def dice_process(self, character):
         ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
@@ -139,5 +164,5 @@ class Game:
         dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
         available_squares = actual_square.get_available_squares(dice)
         selected_square = ConsoleInterface.select_available_squares(available_squares)
-        character.set_position(selected_square.position)
+        character.position = (selected_square.position)
         return selected_square
