@@ -1,11 +1,10 @@
 from . import Position
 from .boardMap import BoardMap
-from .errors import WallError, FakeWallError
+from .errors import WallError, FakeWallError, InvalidCharacterError
 from .vitalStatus import VitalStatus
 from .weapon import Weapon
 
-class InvalidCharacterError(Exception):
-    pass
+
 
 
 class Character:
@@ -27,8 +26,8 @@ class Character:
         self._game = None
 
     def __str__(self):
-        return ('Character :' + str(self.name) + ' - Map: ' + str(self.game.board_map) +
-                ' Position: ' + str(self.position))
+        game_map = getattr(self._game, 'board_map', 'No board map')  # Safeguard if _game is None
+        return f'Character: {self._name} - Map: {game_map} - Position: {self._position}'
 
     # Getter and setter for name
     @property
@@ -38,7 +37,7 @@ class Character:
     @name.setter
     def name(self, value):
         if not value:
-            raise Exception('The character cannot have a None name.')
+            raise InvalidCharacterError('The character cannot have a None name.')
         self._name = value
 
     # Getter and setter for uses_magic
@@ -49,7 +48,7 @@ class Character:
     @uses_magic.setter
     def uses_magic(self, value):
         if value is None:
-            raise Exception(
+            raise InvalidCharacterError(
                 'The character cannot have a uses_magic instance that is not Boolean')
         self._uses_magic = value
 
@@ -61,7 +60,7 @@ class Character:
     @vital_status.setter
     def vital_status(self, value):
         if not value:
-            raise Exception('The character cannot have a None vital status.')
+            raise InvalidCharacterError('The character cannot have a None vital status.')
         self._vital_status = value
 
     # Getter and setter for position
