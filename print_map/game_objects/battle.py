@@ -82,22 +82,26 @@ class Battle:
         return has_won, acc
 
     def get_damages_in_battle(self, character_status: VitalStatus):
+        # Determine character damage
         if self.character.uses_magic:
             character_damage = int(character_status.magic_power * self.dice_damage)\
                             - self.monster.vital_status.magic_defense
         else:
             character_damage = int(character_status.attack * self.dice_damage) \
                             - self.monster.vital_status.defense
+
+        # Determine monster damage
         if self.monster.uses_magic:
             monster_damage = self.monster.vital_status.magic_power\
                              - character_status.magic_defense
         else:
             monster_damage = self.monster.vital_status.attack \
                              - character_status.defense
-        if character_damage <= 0:
-            character_damage = 1
-        if monster_damage <= 0:
-            monster_damage = 1
+
+        # Ensure is at least 1
+        character_damage = max(character_damage, 1)
+        monster_damage = max(monster_damage, 1)
+
         return character_damage, monster_damage
 
     def finish_battle(self, character_hp):
