@@ -4,17 +4,20 @@ from .errors import WallError, FakeWallError
 from .vitalStatus import VitalStatus
 from .weapon import Weapon
 
+class InvalidCharacterError(Exception):
+    pass
+
 
 class Character:
 
     def __init__(self, name: str, uses_magic: bool, vital_status: VitalStatus):
         if not name or not isinstance(name, str):
-            raise (Exception, 'The character can not have a None name.')
+            raise InvalidCharacterError('The character can not have a None name.')
         if not vital_status or not isinstance(vital_status, VitalStatus):
-            raise (Exception, 'The character can not have a None vital status.')
+            raise InvalidCharacterError('The character can not have a None vital status.')
         if uses_magic is None or not isinstance(uses_magic, bool):
-            raise (
-                Exception, 'The character can not have a uses_magic instance that is not Boolean')
+            raise InvalidCharacterError(
+                'The character can not have a uses_magic instance that is not Boolean')
         self._name = name
         self._uses_magic = uses_magic
         self._vital_status = vital_status
