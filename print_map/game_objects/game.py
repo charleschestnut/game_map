@@ -157,7 +157,8 @@ class Game:
         character.position = selected_portal
 
     def dice_process(self, character):
-        ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list())
+        ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list(),
+                                   character.position)
         actual_square = self.board_map.get_square_by_position(
             character.position.x, character.position.y)
         print(f"YOUR CURRENT POSITION IS {character.position}")

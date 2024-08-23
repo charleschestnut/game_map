@@ -1,34 +1,37 @@
 import random
 from typing import List
+from .position import Position
 
 
 class ConsoleInterface:
 
     @staticmethod
-    def print_map(boardmap, numeric_square_list):
-        map = ''
+    def print_map(boardmap, numeric_square_list, character_position=None):
+        game_map = ''
         for acc in range(len(numeric_square_list)):
-            map += square_to_string(boardmap, numeric_square_list, acc)
+            game_map += square_to_string(boardmap, numeric_square_list, acc)
             # Si no es la última fila, añado salto de línea
             if (acc + 1) % boardmap.rows == 0 and int((acc + 1) / boardmap.rows) < boardmap.cols:
-                map += '\n'
-        print(map)
-        return map
+                game_map += '\n'
+        if character_position:
+            game_map = print_character_position(game_map, character_position)
+        print(game_map)
+        return game_map
 
     # WELCOME
     @staticmethod
     def welcome():
         string = """
-        #########################################################################################################
-        #                                                                                                       #
-        #    #########  ##########  #####   #####  #########          #####   #####  ##########  ##########     #
-        #    ##         ##      ##  ##  ## ##  ##  ##                 ##  ## ##  ##  ##      ##  ##      ##     #
-        #    ##         ##      ##  ##   ###   ##  ##                 ##   ###   ##  ##      ##  ##      ##     #
-        #    ##  #####  ##########  ##    #    ##  #######     ####   ##    #    ##  ##########  ##########     #
-        #    ##     ##  ##      ##  ##         ##  ##                 ##         ##  ##      ##  ##             #
-        #    #########  ##      ##  ##         ##  #########          ##         ##  ##      ##  ##             #
-        #                                                                                                       #
-        #########################################################################################################
+        ############################################################################################
+        #                                                                                          #
+        #    #######  ##########  ####   ####  #######        #####   #####  #########  #######    #
+        #    ##       ##      ##  ## ## ## ##  ##             ##  ## ##  ##  ##     ##  ##   ##    #
+        #    ##       ##      ##  ##  ###  ##  ##             ##   ###   ##  ##     ##  ##   ##    #
+        #    ## ####  ##########  ##   #   ##  ######   ####  ##    #    ##  #########  #######    #
+        #    ##   ##  ##      ##  ##       ##  ##             ##         ##  ##     ##  ##         #
+        #    #######  ##      ##  ##       ##  #######        ##         ##  ##     ##  ##         #
+        #                                                                                          #
+        ############################################################################################
         """
         print(string)
 
@@ -36,8 +39,8 @@ class ConsoleInterface:
     @staticmethod
     def throw_dice(position, character_name):
         dice = random.randint(1, 6)
-        string = character_name + " IT'S YOUR TURN! YOUR ACTUAL POSITION IS" +\
-                 str(position) + "YOU HAVE THROWN YOUR DICE AND THE RESULT IS..."
+        string = (character_name + " IT'S YOUR TURN! YOUR ACTUAL POSITION IS" +
+                  str(position) + "YOU HAVE THROWN YOUR DICE AND THE RESULT IS...")
         if dice == 1:
             string += """
                  #####
@@ -86,8 +89,8 @@ class ConsoleInterface:
     # SQUARES CONSOLE
     @staticmethod
     def select_available_squares(squares):
-        str_input = 'Introduce the number of any of this position to move your character (from 0 to ' + str(
-            len(squares) - 1) + '): \n'
+        str_input = ('Introduce the number of any of this position '
+                     'to move your character (from 0 to ') + str(len(squares) - 1) + '): \n'
         acc = 0
         for square in squares:
             if square.type_square == 0:
@@ -114,7 +117,11 @@ class ConsoleInterface:
             index_int = int(index)
             assert (0 <= index_int <= len(squares) - 1)
             selected_square = squares[index_int]
-        except:
+        except ValueError:
+            # Handle the case where index is not a valid integer
+            selected_square = ConsoleInterface.select_available_squares(squares)
+        except AssertionError:
+            # Handle the case where index_int is out of range
             selected_square = ConsoleInterface.select_available_squares(squares)
         return selected_square
 
@@ -148,21 +155,21 @@ class ConsoleInterface:
 
             print(string)
             print('You have won in ' + str(acc) + ' iterations! Congratulations!\n'
-                  'Now you UPGRADED TO LEVEL ' + str(battle.character.level) +
-                  '.\n Your current status is:\n' +
-                  str(battle.character.get_total_vital_status()) + '\n'
-                  'Your current position is ' + str(battle.character.position))
+                                                  'Now you UPGRADED TO LEVEL ' + str(
+                battle.character.level) + '.\n'
+                                          'Your current status is:\n' + str(
+                battle.character.get_total_vital_status()) + '\n'
+                                                             'Your current position is ' + str(
+                battle.character.position))
 
         else:
-            string = "You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n" \
+            string = 'You... HAVE LOST and HAVE BEEN REMOVED FROM THE GAME!!! \n' \
                      "MUAHAHAHAHAHAHAHA!!!!! \n" \
                      "...\n" \
                      "I mean... You have been defeated, good luck next time!\n" \
                      "PS: You have lost in only " + str(acc) + " interactions..\n." \
                      "MY GRANNY WOULD SURVIVE BETTER THAN YOU MUAHAHAHAHA!!!!\n\n"
             print(string)
-
-
 
     # PORTAL
     @staticmethod
@@ -206,13 +213,10 @@ class ConsoleInterface:
     def finish_game(game, winner):
         string = ''
         if winner:
-            string = "The winner is..." + str(winner.name.upper() +
-                                              "!!! \n"
-                                              "CON-GRA-TU-LA-TIONS!!!\n"
-                                              "But not to your mates, that were horrrible "
-                                              "playing, oh my godness...\n "
-                                              " \n"
-                                              " \n")
+            string = 'The winner is...' + str(winner.name.upper()) + '!!! \n' \
+                     "CON-GRA-TU-LA-TIONS!!!\n"\
+                     "But not to your mates, that were horrrible " \
+                     "playing, oh my godness...\n\n\n"
             for character in game.characters:
                 if character.name != winner.name:
                     c_name = character.name
@@ -233,6 +237,18 @@ class ConsoleInterface:
                   "I hope that you enjoyed that demo!\n" \
                   "See you all soon!"
         print(string)
+
+
+def print_character_position(printed_map, character_position: Position):
+    printed_map_split = printed_map.split('\n')
+    n_column = len(printed_map_split[0])
+    x = character_position.x
+    y = n_column - character_position.y
+    char_list = list(printed_map_split[y])
+    char_list[x] = "@"
+    printed_map_split[y] = ''.join(char_list)
+    map_with_character = '\n'.join(printed_map_split)
+    return map_with_character
 
 
 def square_to_string(boardmap, numeric_square_list, index):
