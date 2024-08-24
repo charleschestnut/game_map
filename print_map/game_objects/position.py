@@ -1,7 +1,7 @@
 class Position:
     def __init__(self, x, y):
         if (not isinstance(x, int) or x < 0) or (not isinstance(y, int) or y < 0):
-            raise Exception("The axis X and Y must be positive integer values.")
+            raise ValueError("The axis X and Y must be positive integer values.")
         self._x = x
         self._y = y
 
@@ -15,7 +15,7 @@ class Position:
     @x.setter
     def x(self, value):
         if not isinstance(value, int) or value < 0:
-            raise Exception("The axis X must be positive integer values.")
+            raise ValueError("The axis X must be positive integer values.")
         self._x = value
 
     @property
@@ -25,6 +25,6 @@ class Position:
     @y.setter
     def y(self, value):
         if not isinstance(value, int) or value < 0:
-            raise Exception("The axis Y must be positive integer values.")
+            raise ValueError("The axis Y must be positive integer values.")
         self._y = value
 

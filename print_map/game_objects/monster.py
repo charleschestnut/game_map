@@ -5,15 +5,13 @@ from .weapon import Weapon
 class Monster:
     def __init__(self, name: str, uses_magic: bool, vital_status: VitalStatus, weapon=None):
         if not name or not isinstance(name, str):
-            raise (Exception, 'Can not create a Monster without name, it also needs to be an '
-                              'string.')
-
+            raise (Exception, "Monster must have a valid name as a string.")
         if not vital_status or not isinstance(vital_status, VitalStatus):
-            raise (Exception, 'Vital status of the monster needs to be a VitalStatus instance.')
+            raise ValueError("Monster's vital_status must be a VitalStatus instance.")
         if uses_magic is None or not isinstance(uses_magic, bool):
-            raise (Exception, 'The uses_magic attribute of the monster needs to be a Boolean.')
+            raise TypeError("Monster's uses_magic attribute must be a boolean.")
         if weapon and not isinstance(weapon, Weapon):
-            raise (Exception, 'Weapon of the monster needs to be a Weapon instance.')
+            raise TypeError("Monster's weapon must be a Weapon instance if provided.")
         self._name = name
         self._uses_magic = uses_magic
         self._vital_status = vital_status
@@ -21,7 +19,7 @@ class Monster:
         self._game = None
 
     def __str__(self):
-        return 'Monster '+self._name
+        return f'Monster {self._name}'
 
     # Getter and setter for name
     @property
@@ -31,7 +29,7 @@ class Monster:
     @name.setter
     def name(self, value):
         if not value or not isinstance(value, str):
-            raise Exception('Can not create a Monster without name, it also needs to be a string.')
+            raise ValueError('Monster name must be a non-empty string.')
         self._name = value
 
     # Getter and setter for uses_magic
@@ -42,7 +40,7 @@ class Monster:
     @uses_magic.setter
     def uses_magic(self, value):
         if value is None or not isinstance(value, bool):
-            raise Exception('The uses_magic attribute of the monster needs to be a Boolean.')
+            raise TypeError('The uses_magic attribute of the monster needs to be a boolean.')
         self._uses_magic = value
 
     # Getter and setter for vital_status
@@ -53,7 +51,7 @@ class Monster:
     @vital_status.setter
     def vital_status(self, value):
         if not isinstance(value, VitalStatus):
-            raise Exception('Vital status of the monster needs to be a VitalStatus instance.')
+            raise TypeError('Vital status of the monster needs to be a VitalStatus instance.')
         self._vital_status = value
 
     # Getter and setter for weapon
@@ -64,7 +62,7 @@ class Monster:
     @weapon.setter
     def weapon(self, value):
         if value and not isinstance(value, Weapon):
-            raise Exception('Weapon of the monster needs to be a Weapon instance.')
+            raise TypeError('Weapon of the monster needs to be a Weapon instance.')
         self._weapon = value
 
     # Getter and setter for game

@@ -24,7 +24,7 @@ character_1 = Character("Onion knight", False, v_status_character)
 character_2 = Character("Time knight", False, v_status_character)
 
 game = Game(board_map)
-game.append_character_list([character_1])
+game.append_character_list([character_1, character_2])
 
 
 if __name__ == '__main__':

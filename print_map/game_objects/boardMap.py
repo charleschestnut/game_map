@@ -1,5 +1,4 @@
 from .position import Position
-from .square import Square
 
 
 class BoardMap:
@@ -40,38 +39,43 @@ class BoardMap:
     def get_portals(self):
         return [square.position for square in self.squares if square.type_square == 5]
 
+    def _generate_error_message(self, message):
+        return f'Error: {message} Currently, there are {len(self.squares)} squares.'
+
     def create_squares_of_boardmap(self, squares):
-        if len(self.squares) != 0:
-            raise TypeError('The boardmap has all it squares: '
-                            + str(len(self.squares) + 1) +
-                            '. Please, check them and modify'
-                            ' them if you want to append another one.')
-        # We have to check the portals available in the map, they need to be:
-        # Portals != 1
+        if self.squares:
+            raise TypeError(self._generate_error_message(
+                'The boardmap already contains squares. Modify existing ones if you want to add '
+                'more.'))
+
         if not _check_portal_pass_restrictions(squares):
-            raise TypeError('The boardmap cannot have an unique portal. It needs to '
-                            'have 0 or more than two.')
+            raise TypeError(self._generate_error_message(
+                'The boardmap must have either 0 or more than two portals.'))
 
-        # We have to check that there's always ONE only start position
         if not _check_start_position_restrictions(squares):
-            raise TypeError('The boardmap must have an unique start position square')
-        # We have to check that there's always one or more finish position
-        if not _check_finish_position_restrictions(squares):
-            raise TypeError('The boardmap must have, at least, one finish position square')
+            raise TypeError(self._generate_error_message(
+                'The boardmap must have exactly one start position square.'))
 
-        for sq in squares:
-            self.append_square(sq)
+        if not _check_finish_position_restrictions(squares):
+            raise TypeError(self._generate_error_message(
+                'The boardmap must have at least one finish position square.'))
+
+        for square in squares:
+            self.append_square(square)
 
     def append_square(self, square_type_square):
+        from .square import Square
         if len(self.squares) >= self.rows * self.cols:
-            raise TypeError('The boardmap has all it squares: ' + str(len(self.squares)) +
-                            '. Please, check them and modify'
-                            ' them if you want to append another one.')
-        cols = self.cols
-        rows = self.rows
+            raise TypeError(
+                f'The boardmap has all it squares {str(len(self.squares))}'
+                f'Please, check them and modify them if you want to append another one.')
+
+        # Calculate position of new square
         index = len(self.squares)
-        x = (index % cols)
-        y = rows - 1 - (index // cols)
+        x = (index % self.cols)
+        y = self.rows - 1 - (index // self.cols)
+
+        # Create and append Square
         square = Square(Position(x, y), square_type_square, self)
         self.squares.append(square)
 
