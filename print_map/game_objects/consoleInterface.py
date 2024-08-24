@@ -124,8 +124,8 @@ class ConsoleInterface:
                      f'your character (from 0 to {str(len(squares) - 1)}) \n')
         acc = 0
         for square in squares:
-            acc += 1
             str_input += describe_square(acc, square) + '\n'
+            acc += 1
 
         # Input and validate user selection
         while True:
@@ -251,7 +251,7 @@ def print_character_position(printed_map, character_position: Position):
     printed_map_split = printed_map.split('\n')
     n_column = len(printed_map_split[0])
     x = character_position.x
-    y = n_column - character_position.y
+    y = n_column - character_position.y - 1
     char_list = list(printed_map_split[y])
     char_list[x] = "@"
     printed_map_split[y] = ''.join(char_list)
