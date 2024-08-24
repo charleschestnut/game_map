@@ -1,18 +1,18 @@
+from . import BoardMap
 from .position import Position
 
 
 class Square:
 
-    @property
-    def boardmap(self):
-        return self._boardmap
-
     def __init__(self, position, type_square, boardmap):
-        if (not isinstance(position, Position) or position.x >= boardmap.cols or
-                position.y >= boardmap.rows):
-            raise Exception("Position is not a valid position instance")
-        elif type_square not in range(8):
-            raise Exception("The valid types of square are between 0 and 8")
+        if not isinstance(position, Position):
+            raise TypeError("Position must be an instance of the Position class.")
+        if position.x >= boardmap.cols or position.y >= boardmap.rows:
+            raise ValueError("Position is out of the boardmap boundaries.")
+        if not isinstance(boardmap, BoardMap):  # Assuming BoardMap is a class
+            raise TypeError("boardmap must be an instance of the BoardMap class.")
+        if not (0 <= type_square < 8):
+            raise ValueError("The valid types of square are between 0 and 7.")
 
         self._position = position
         self._type_square = type_square
@@ -51,7 +51,7 @@ class Square:
         self._boardmap = value
 
     def __str__(self):
-        return str(self.position) + ' - type_square: ' + str(self.type_square)
+        return f'{str(self.position)} - type_square: {str(self.type_square)}'
 
     def __lt__(self, other):
         if self.position.x == other.position.x:
@@ -60,87 +60,88 @@ class Square:
             return self.position.x < other.position.x
 
     def can_move_to_direction(self, direction):
-        next_square = None
-        if direction == 'L':
-            next_square = self.boardmap.get_square_by_position(self.position.x - 1, self.position.y)
-        elif direction == 'R':
-            next_square = self.boardmap.get_square_by_position(self.position.x + 1, self.position.y)
-        elif direction == 'T':
-            next_square = self.boardmap.get_square_by_position(self.position.x, self.position.y + 1)
-        elif direction == 'B':
-            next_square = self.boardmap.get_square_by_position(self.position.x, self.position.y - 1)
+        directions_map = {
+            'L': (-1, 0),  # Move Left (x - 1)
+            'R': (1, 0),  # Move Right (x + 1)
+            'T': (0, 1),  # Move Up (y + 1)
+            'B': (0, -1)  # Move Down (y - 1)
+        }
 
-        if next_square.type_square == 1:
-            return False
-        elif next_square.type_square == 2:
-            # Ver si el personaje de la casilla tiene o no el objeto posible para el movimiento
-            # Mientras tanto, hace el mismo efecto que si es una pared normal
-            return False
+        if direction not in directions_map:
+            raise ValueError(
+                f"Invalid direction '{direction}'. Valid directions are 'L', 'R', 'T', 'B'.")
+
+        dx, dy = directions_map[direction]
+        next_square = self.boardmap.get_square_by_position(self.position.x + dx,
+                                                           self.position.y + dy)
+
+        if next_square is None:
+            return False  # Out of bounds or invalid position
+        elif next_square.type_square in {1, 2}:
+            return False  # Can't move into walls or special type_square 2
         else:
             return True
 
     def get_available_squares(self, dice_number):
-        available_squares = self.calc_available_squares(self, dice_number, None, positions=[])
+        available_squares = self.calc_available_squares(self, dice_number)
         return available_squares
 
     @staticmethod
-    def calc_available_squares(map_square, dice_number, direction, positions=[]):
-        if direction is not None:
+    def calc_available_squares(map_square, dice_number, direction=None, positions=None):
+        if positions is None:
+            positions = []
+
+        if dice_number < 0:
+            return list(set(positions))
+
+        if direction:
             map_square = map_square.next_axis_position(direction)
-            if dice_number == 0:
-                positions.append(map_square)
-            else:
-                dice_number -= 1
-                directions = map_square.calc_possible_directions(direction)
-                for direction_value in directions:
-                    map_square.calc_available_squares(map_square, dice_number,
-                                                      direction_value, positions)
+
+        if dice_number == 0:
+            positions.append(map_square)
         else:
             dice_number -= 1
             directions = map_square.calc_possible_directions(direction)
             for direction_value in directions:
-                map_square.calc_available_squares(map_square, dice_number,
-                                                  direction_value, positions)
+                # Recursive call for each possible direction
+                map_square.calc_available_squares(map_square, dice_number, direction_value,
+                                                  positions)
+
         return list(set(positions))
 
     def calc_possible_directions(self, direction):
-        def remove_opposite_direction(directions, dir):
-            if dir == 'L':
-                directions.remove('R')
-            elif dir == 'R':
-                directions.remove('L')
-            elif dir == 'T':
-                directions.remove('B')
-            elif dir == 'B':
-                directions.remove('T')
+        def remove_opposite_direction(directions, direction_selected):
+            opposite_directions = {
+                'L': 'R',
+                'R': 'L',
+                'T': 'B',
+                'B': 'T'
+            }
+            opposite = opposite_directions.get(direction_selected)
+            if opposite in directions:
+                directions.remove(opposite)
             return directions
 
-        available_directions = []
-        for dir in ['L', 'R', 'T', 'B']:
-            if self.can_move_to_direction(dir):
-                available_directions.append(dir)
-        if len(available_directions) > 1:
+        available_directions = [d for d in ['L', 'R', 'T', 'B'] if self.can_move_to_direction(d)]
+
+        if direction:
             available_directions = remove_opposite_direction(available_directions, direction)
 
         return available_directions
 
     def next_axis_position(self, direction):
         position = self.position
-        if direction == 'L' or direction == 'R' or \
-                direction == 'T' or direction == 'B':
+        direction_offsets = {
+            'L': (-1, 0),
+            'R': (1, 0),
+            'T': (0, 1),
+            'B': (0, -1)
+        }
 
-            if direction == 'L':
-                next_square = self.boardmap.get_square_by_position(position.x - 1, position.y)
-
-            elif direction == 'R':
-                next_square = self.boardmap.get_square_by_position(position.x + 1, position.y)
-
-            elif direction == 'T':
-                next_square = self.boardmap.get_square_by_position(position.x, position.y + 1)
-
-            else:
-                next_square = self.boardmap.get_square_by_position(position.x, position.y - 1)
-
+        if direction in direction_offsets:
+            dx, dy = direction_offsets[direction]
+            next_position = Position(position.x + dx, position.y + dy)
+            next_square = self.boardmap.get_square_by_position(next_position.x, next_position.y)
             return next_square
         else:
-            print('Wrong direction movement. Only can be: L, R, T, B')
+            raise ValueError("Invalid direction. Only 'L', 'R', 'T', 'B' are allowed.")

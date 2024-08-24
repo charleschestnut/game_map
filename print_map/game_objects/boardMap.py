@@ -1,5 +1,4 @@
 from .position import Position
-from .square import Square
 
 
 class BoardMap:
@@ -65,6 +64,7 @@ class BoardMap:
             self.append_square(square)
 
     def append_square(self, square_type_square):
+        from .square import Square
         if len(self.squares) >= self.rows * self.cols:
             raise TypeError(
                 f'The boardmap has all it squares {str(len(self.squares))}'
