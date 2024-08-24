@@ -5,8 +5,6 @@ from .vitalStatus import VitalStatus
 from .weapon import Weapon
 
 
-
-
 class Character:
 
     def __init__(self, name: str, uses_magic: bool, vital_status: VitalStatus):

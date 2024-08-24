@@ -5,6 +5,7 @@ class InvalidPositionError(Exception):
 class InvalidCharacterError(Exception):
     pass
 
+
 class WallError(InvalidPositionError):
     def __init__(self, position):
         super().__init__(f"The character cannot move to this position because "

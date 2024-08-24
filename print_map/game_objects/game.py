@@ -1,4 +1,3 @@
-from .consoleInterface import ConsoleInterface
 from .character import Character
 from .monster import Monster
 from .weapon import Weapon
@@ -41,15 +40,15 @@ class Game:
     def weapons(self):
         return self._weapons
 
-    def append_character(self, character):
-        if isinstance(character, Character):
-            if character not in self.characters:
-                self.characters.append(character)
-                self.characters_alive.append(character)
-                character.game = self
-                character.set_start_position()
-        else:
-            raise (Exception, 'To append a character to the game, use a character instance')
+    def append_character(self, character: Character):
+        if not isinstance(character, Character):
+            raise TypeError('To append a character to the game, use a character instance')
+
+        if character not in self.characters:
+            self.characters.append(character)
+            self.characters_alive.append(character)
+            character.game = self
+            character.set_start_position()
 
     def append_character_list(self, character_list):
         if character_list:
@@ -66,12 +65,11 @@ class Game:
             self.characters_alive.remove(character)
 
     def append_monster(self, monster):
-        if isinstance(monster, Monster):
-            if monster not in self.monsters:
-                self.monsters.append(monster)
-                monster.game = self
-        else:
-            raise (Exception, 'To append a monster to the game, use a monster instance')
+        if not isinstance(monster, Monster):
+            raise TypeError('To append a monster to the game, use a monster instance')
+        if monster not in self.monsters:
+            self.monsters.append(monster)
+            monster.game = self
 
     def append_monster_list(self, monster_list):
         if monster_list:
@@ -86,12 +84,11 @@ class Game:
         return random.choice(self.monsters)
 
     def append_weapon(self, weapon):
-        if isinstance(weapon, Weapon):
-            if weapon not in self.weapons:
-                self.weapons.append(weapon)
-                weapon.game = self
-        else:
-            raise (Exception, 'To append a weapon to the game, use a weapon instance')
+        if not isinstance(weapon, Weapon):
+            raise TypeError('To append a weapon to the game, use a weapon instance')
+        if weapon not in self.weapons:
+            self.weapons.append(weapon)
+            weapon.game = self
 
     def append_weapon_list(self, weapon_list):
         if weapon_list:
@@ -115,15 +112,18 @@ class Game:
     def start_game_console(self):
         winner = None
         ConsoleInterface.welcome()
+
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
                 selected_square = self.dice_process(character)
+
                 if selected_square.type_square == 3:  # BATTLE
                     battle = Battle(character)
                     has_won, rounds = battle.realise()
                     ConsoleInterface.print_finish_battle(battle, has_won, rounds)
                 elif selected_square.type_square == 4:  # START POSITION
-                    ''
+                    pass
+
                 elif selected_square.type_square == 5:  # PORTAL
                     self.portal_process(character)
 
@@ -132,12 +132,16 @@ class Game:
                     character.position = selected_square.position
                     break
                 elif selected_square.type_square == 7:  #
-                    ''
+                    pass
+
+            if winner:
+                break
         ConsoleInterface.finish_game(self, winner)
 
     def start_game_only_movement(self):
         winner = None
         ConsoleInterface.welcome()
+
         while len(self.characters_alive) > 0 and not self.has_any_character_won():
             for character in self.characters_alive:
                 selected_square = self.dice_process(character)
@@ -148,6 +152,9 @@ class Game:
                     winner = character
                     character.position = selected_square.position
                     break
+            if winner:
+                break
+
         ConsoleInterface.finish_game(self, winner)
 
     def portal_process(self, character):
@@ -159,11 +166,15 @@ class Game:
     def dice_process(self, character):
         ConsoleInterface.print_map(self.board_map, self.board_map.get_square_types_list(),
                                    character.position)
-        actual_square = self.board_map.get_square_by_position(
-            character.position.x, character.position.y)
         print(f"YOUR CURRENT POSITION IS {character.position}")
-        dice = ConsoleInterface.throw_dice(actual_square.position, character.name)
-        available_squares = actual_square.get_available_squares(dice)
+
+        current_square = self.board_map.get_square_by_position(
+            character.position.x, character.position.y)
+        dice_roll = ConsoleInterface.throw_dice(current_square.position, character.name)
+
+        available_squares = current_square.get_available_squares(dice_roll)
+
         selected_square = ConsoleInterface.select_available_squares(available_squares)
-        character.position = (selected_square.position)
+        character.position = selected_square.position
+
         return selected_square
