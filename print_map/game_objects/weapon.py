@@ -1,10 +1,12 @@
+from enum import Enum
+
 from .vitalStatus import VitalStatus
 
-SPECIALTIES = [
-    'CROSS_WALLS',
-    'PORTAL_SELECTION',
-    'NEVER_SURPRISE_BATTLE'
-]
+
+class Specialty(Enum):
+    CROSS_WALLS = 1
+    PORTAL_SELECTION = 2
+    NEVER_SURPRISE_BATTLE = 3
 
 
 class Weapon:
