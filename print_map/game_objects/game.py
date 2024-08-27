@@ -12,6 +12,7 @@ class Game:
         self._board_map = board_map
         self._characters = []
         self._characters_alive = []
+        self._current_character = None
         self._monsters = []
         self._weapons = []
 
@@ -39,6 +40,15 @@ class Game:
     @property
     def weapons(self):
         return self._weapons
+
+    @property
+    def current_character(self):
+        return self._current_character
+
+    @current_character.setter
+    def current_character(self, character: Character):
+        if character in self.characters_alive:
+            self._current_character = character
 
     def append_character(self, character: Character):
         if not isinstance(character, Character):

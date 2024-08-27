@@ -59,7 +59,7 @@ class Square:
         else:
             return self.position.x < other.position.x
 
-    def can_move_to_direction(self, direction):
+    def can_move_to_direction(self, direction, can_cross_walls=False):
         directions_map = {
             'L': (-1, 0),  # Move Left (x - 1)
             'R': (1, 0),  # Move Right (x + 1)
@@ -77,17 +77,27 @@ class Square:
 
         if next_square is None:
             return False  # Out of bounds or invalid position
-        elif next_square.type_square in {1, 2}:
-            return False  # Can't move into walls or special type_square 2
+        elif next_square.type_square == 1:
+            return False
+        elif next_square.type_square == 2:
+            if can_cross_walls:
+                return True
+            else:
+                return False
         else:
             return True
 
-    def get_available_squares(self, dice_number):
-        available_squares = self.calc_available_squares(self, dice_number)
+    def get_available_squares(self, dice_number, current_character=None):
+        can_cross_walls = False
+        if current_character:
+            can_cross_walls = current_character.can_cross_walls()
+        available_squares = self.calc_available_squares(
+            self, dice_number, can_cross_walls)
         return available_squares
 
     @staticmethod
-    def calc_available_squares(map_square, dice_number, direction=None, positions=None):
+    def calc_available_squares(map_square, dice_number, direction=None,
+                               positions=None, can_cross_walls=False):
         if positions is None:
             positions = []
 
@@ -101,7 +111,11 @@ class Square:
             positions.append(map_square)
         else:
             dice_number -= 1
-            directions = map_square.calc_possible_directions(direction)
+            # If I have no more movements and I can cross the walls, my last movement cannot be
+            # inside of a wall, I need to be out of it.
+            if can_cross_walls and dice_number == 0:
+                can_cross_walls = False
+            directions = map_square.calc_possible_directions(direction, can_cross_walls)
             for direction_value in directions:
                 # Recursive call for each possible direction
                 map_square.calc_available_squares(map_square, dice_number, direction_value,
@@ -109,7 +123,7 @@ class Square:
 
         return list(set(positions))
 
-    def calc_possible_directions(self, direction):
+    def calc_possible_directions(self, direction, can_cross_walls):
         def remove_opposite_direction(directions, direction_selected):
             opposite_directions = {
                 'L': 'R',
@@ -122,7 +136,8 @@ class Square:
                 directions.remove(opposite)
             return directions
 
-        available_directions = [d for d in ['L', 'R', 'T', 'B'] if self.can_move_to_direction(d)]
+        available_directions = [d for d in ['L', 'R', 'T', 'B'] if
+                                self.can_move_to_direction(d, can_cross_walls)]
 
         if direction:
             available_directions = remove_opposite_direction(available_directions, direction)

@@ -2,8 +2,7 @@ from . import Position
 from .boardMap import BoardMap
 from .errors import WallError, FakeWallError, InvalidCharacterError
 from .vitalStatus import VitalStatus
-from .weapon import Weapon
-
+from .weapon import Weapon, Specialty
 
 class Character:
 
@@ -168,8 +167,7 @@ class Character:
         if self.game:
             self.position = self.game.board_map.get_start_position()
 
-    def get_game(self):
-        return self.game
-
-    def set_game(self, game):
-        self.game = game
+    def can_cross_walls(self):
+        for weapon in self.weapons:
+            if weapon.specialty == Specialty.CROSS_WALLS:
+                return True
