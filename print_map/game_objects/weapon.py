@@ -8,6 +8,7 @@ class Specialty(Enum):
     PORTAL_SELECTION = 2
     NEVER_SURPRISE_BATTLE = 3
 
+Specialty_list = ''
 
 class Weapon:
     def __init__(self, name, description, vital_status, specialty=None):
@@ -20,9 +21,9 @@ class Weapon:
         if not isinstance(vital_status, VitalStatus):
             raise ValueError('The vital status of the weapon must be a valid VitalStatus instance.')
 
-        if specialty and specialty not in SPECIALTIES:
+        if specialty and not isinstance(specialty, Specialty):
             raise ValueError(f"The Weapon's specialty must be none or it needs "
-                             f"to be inside of {str(SPECIALTIES)}")
+                             f"to be inside of {str(Specialty)}")
 
         self.name = name
         self.description = description
