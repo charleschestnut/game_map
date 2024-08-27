@@ -1,6 +1,7 @@
 import unittest
 from print_map.game_objects import Weapon
 from print_map.game_objects import VitalStatus
+from print_map.game_objects.weapon import Specialty
 
 # Constants
 STATUS_PROPORTION = [0.5, 0.5, 0.7, 0.9, 0.8]
@@ -11,6 +12,7 @@ V_STATUS_NEGATIVE = VitalStatus(10, 10, 10, 10, 10, STATUS_PROPORTION, -1)
 NAME_WEAPON_1 = "Super Sword"
 NAME_WEAPON_2 = "Super Shield"
 NAME_LONGER = "Super Ultra Mega Hero of all the Times"
+
 DESCRIPTION_WEAPON_1 = "This sword can cut everything"
 DESCRIPTION_WEAPON_2 = "This shield can repel all the attacks"
 DESCRIPTION_LONG = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod "
@@ -41,6 +43,16 @@ class MyTestCase(unittest.TestCase):
     def test_create_v_status_wrong_instance(self):
         self.assertRaises(ValueError, Weapon, NAME_WEAPON_1, DESCRIPTION_WEAPON_1,
                           "I'm not a v_status")
+
+    def test_create_specialty_weapon(self):
+        weapon = Weapon(NAME_WEAPON_1, DESCRIPTION_WEAPON_1, V_STATUS_NORMAL, Specialty.CROSS_WALLS)
+        self.assertIsNotNone(weapon)
+        weapon = Weapon(NAME_WEAPON_1, DESCRIPTION_WEAPON_1, V_STATUS_NORMAL,
+                        Specialty.PORTAL_SELECTION)
+        self.assertIsNotNone(weapon)
+        weapon = Weapon(NAME_WEAPON_1, DESCRIPTION_WEAPON_1, V_STATUS_NORMAL,
+                        Specialty.NEVER_SURPRISE_BATTLE)
+        self.assertIsNotNone(weapon)
 
 
 if __name__ == '__main__':
