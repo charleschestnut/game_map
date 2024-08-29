@@ -182,7 +182,7 @@ class Game:
             character.position.x, character.position.y)
         dice_roll = ConsoleInterface.throw_dice(current_square.position, character.name)
 
-        available_squares = current_square.get_available_squares(dice_roll)
+        available_squares = current_square.get_available_squares(dice_roll, character)
 
         selected_square = ConsoleInterface.select_available_squares(available_squares)
         character.position = selected_square.position
