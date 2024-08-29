@@ -77,13 +77,10 @@ class Square:
 
         if next_square is None:
             return False  # Out of bounds or invalid position
-        elif next_square.type_square == 1:
+        elif next_square.type_square == 1 or (next_square.type_square == 2 and not can_cross_walls):
             return False
-        elif next_square.type_square == 2:
-            if can_cross_walls:
-                return True
-            else:
-                return False
+        elif next_square.type_square == 2 and can_cross_walls:
+            return True
         else:
             return True
 
@@ -92,7 +89,7 @@ class Square:
         if current_character:
             can_cross_walls = current_character.can_cross_walls()
         available_squares = self.calc_available_squares(
-            self, dice_number, can_cross_walls)
+            self, dice_number, can_cross_walls=can_cross_walls)
         return available_squares
 
     @staticmethod
@@ -115,11 +112,12 @@ class Square:
             # inside of a wall, I need to be out of it.
             if can_cross_walls and dice_number == 0:
                 can_cross_walls = False
-            directions = map_square.calc_possible_directions(direction, can_cross_walls)
+            directions = map_square.calc_possible_directions(direction,
+                                                             can_cross_walls=can_cross_walls)
             for direction_value in directions:
                 # Recursive call for each possible direction
                 map_square.calc_available_squares(map_square, dice_number, direction_value,
-                                                  positions)
+                                                  positions, can_cross_walls=can_cross_walls)
 
         return list(set(positions))
 
@@ -137,7 +135,7 @@ class Square:
             return directions
 
         available_directions = [d for d in ['L', 'R', 'T', 'B'] if
-                                self.can_move_to_direction(d, can_cross_walls)]
+                                self.can_move_to_direction(d, can_cross_walls=can_cross_walls)]
 
         if direction:
             available_directions = remove_opposite_direction(available_directions, direction)
