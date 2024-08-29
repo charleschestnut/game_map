@@ -1,11 +1,11 @@
 from print_map.game_objects import Battle, BoardMap, Character, ConsoleInterface, Monster, \
     Game, Position, VitalStatus, Weapon
-
+from print_map.game_objects.weapon import Specialty
 
 SQUARES = [1, 1, 1, 1, 1, 1, 1, 1, 1,
            1, 4, 0, 0, 0, 0, 0, 0, 1,
            1, 0, 3, 1, 0, 1, 3, 0, 1,
-           1, 0, 2, 1, 0, 1, 1, 0, 1,
+           1, 2, 2, 1, 0, 1, 1, 0, 1,
            1, 0, 0, 0, 3, 0, 0, 0, 1,
            1, 0, 1, 1, 0, 1, 1, 0, 1,
            1, 0, 3, 1, 0, 2, 3, 0, 1,
@@ -31,8 +31,10 @@ v_status_monster_1 = VitalStatus(10, 10, 10, 10, 10)
 v_status_monster_2 = VitalStatus(7, 3, 10, 1, 1)
 v_status_monster_3 = VitalStatus(1000, 1000, 1000, 1000, 1000)
 
-weapon_1 = Weapon("Super sword", "This sword cuts what it wants.", v_status_weapon_1)
-weapon_2 = Weapon("Super shield", "This sword cuts what it wants.", v_status_weapon_2)
+weapon_1 = Weapon("Super sword", "This sword cuts what it wants.", v_status_weapon_1,
+                  specialty=Specialty.CROSS_WALLS)
+weapon_2 = Weapon("Super shield", "This sword cuts what it wants.", v_status_weapon_2,
+                  )
 weapon_3 = Weapon("Super hat", "This hat makes you invisible.", v_status_weapon_3)
 weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.",
                   v_status_weapon_4)
@@ -42,6 +44,7 @@ weapon_7 = Weapon("Super face", "This face is stronger than any shield built for
                   v_status_weapon_7)
 
 character_1 = Character("Onion knight", False, v_status_character)
+character_1.add_weapon(weapon_1)  # Character 1 can cross walls now
 character_2 = Character("Time knight", False, v_status_character)
 
 monster_1 = Monster('Goomba', True, v_status_monster_1, weapon_7)

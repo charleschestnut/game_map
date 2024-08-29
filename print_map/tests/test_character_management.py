@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from print_map.game_objects import BoardMap, Character, Weapon, VitalStatus, Position, Game
+from print_map.game_objects.weapon import Specialty
 
 SQUARES = [1, 1, 1, 1, 1, 1, 1, 1, 1,
            1, 4, 0, 0, 0, 0, 0, 0, 1,
@@ -32,8 +33,11 @@ v_status_weapon_5 = VitalStatus(1, 1, 1, 1, 1, None, 0)
 weapon_1 = Weapon("Super sword", "This sword cuts what it wants.", v_status_weapon_1)
 weapon_2 = Weapon("Super shield", "This sword cuts what it wants.", v_status_weapon_2)
 weapon_3 = Weapon("Super hat", "This hat makes you invisible.", v_status_weapon_3)
-weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.", v_status_weapon_4)
+weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.",
+                  v_status_weapon_4)
 weapon_5 = Weapon("Super book", "This book increases your magic power.", v_status_weapon_5)
+weapon_special = Weapon("Super book", "This book increases your magic power.", v_status_weapon_5,
+                        Specialty.CROSS_WALLS)
 
 character_name_1 = "Onion Knight"
 character_name_2 = "Shield Soldier"
@@ -241,6 +245,12 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(final_status.magic_power, total_magic_power)
         self.assertEqual(final_status.defense, total_defense)
         self.assertEqual(final_status.magic_defense, total_magic_defense)
+
+    def test_character_special_weapon(self):
+        character = Character(character_name_1, uses_magic, v_status_character)
+        character.level = 7
+        character.add_weapon(weapon_special)
+        self.assertTrue(character.can_cross_walls())
 
 
 if __name__ == '__main__':
