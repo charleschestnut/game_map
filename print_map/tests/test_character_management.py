@@ -73,71 +73,61 @@ class MyTestCase(unittest.TestCase):
     def test_initiation_character_without_vital_status(self):
         self.assertRaises(Exception, Character, character_name_1, uses_magic, None)
 
-
     def test_create_character_with_one_weapon(self):
-        raises = False
-        try:
-            character = Character(character_name_1, doesnt_use_magic, v_status_character)
-            character.add_weapon(weapon_1)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        # Arrange: Create a character
+        character = Character(character_name_1, doesnt_use_magic, v_status_character)
+
+        # Act: Add a weapon to the character
+        character.add_weapon(weapon_1)
+
+        # Assert: Verify the weapon was added successfully
+        self.assertIn(weapon_1, character.weapons,
+                      "The weapon was not added to the character's weapon list")
 
     def test_create_character_with_multiple_weapon(self):
-        raises = False
-        try:
-            character = Character(character_name_1, uses_magic, v_status_character)
-            character.add_weapon(weapon_1)
-            character.add_weapon(weapon_2)
-            character.add_weapon(weapon_3)
-            character.add_weapon(weapon_4)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        character = Character(character_name_1, uses_magic, v_status_character)
+        character.add_weapon(weapon_1)
+        character.add_weapon(weapon_2)
+        character.add_weapon(weapon_3)
+        character.add_weapon(weapon_4)
+
+        self.assertEqual(set(character.weapons), {weapon_1, weapon_2, weapon_3, weapon_4})
 
     @patch('builtins.input', side_effect=['3'])
     def test_create_character_with_five_weapon_and_select_third(self, input):
-        raises = False
-        try:
-            character = Character(character_name_1, uses_magic, v_status_character)
-            character.add_weapon(weapon_1)
-            character.add_weapon(weapon_2)
-            character.add_weapon(weapon_3)
-            character.add_weapon(weapon_4)
-            character.add_weapon(weapon_5)
-        except:
-            raises = True
-        self.assertFalse(raises)
-        self.assertSetEqual(set(character.weapons), set([weapon_1, weapon_2, weapon_3, weapon_5]))
+
+        character = Character(character_name_1, uses_magic, v_status_character)
+        character.add_weapon(weapon_1)
+        character.add_weapon(weapon_2)
+        character.add_weapon(weapon_3)
+        character.add_weapon(weapon_4)
+        character.add_weapon(weapon_5)
+
+        self.assertSetEqual(set(character.weapons), {weapon_1, weapon_2, weapon_3, weapon_5})
 
     @patch('builtins.input', side_effect=['6'])
     def test_create_character_with_five_weapon_and_select_sixth(self, input):
-        raises = False
-        try:
-            character = Character(character_name_1, doesnt_use_magic, v_status_character)
-            character.add_weapon(weapon_1)
-            character.add_weapon(weapon_2)
-            character.add_weapon(weapon_3)
-            character.add_weapon(weapon_4)
-            character.add_weapon(weapon_5)
-        except:
-            raises = True
-        self.assertTrue(raises)
+        # Arrange: Create a character and add five weapons
+        character = Character(character_name_1, doesnt_use_magic, v_status_character)
+        character.add_weapon(weapon_1)
+        character.add_weapon(weapon_2)
+        character.add_weapon(weapon_3)
+        character.add_weapon(weapon_4)
+
+        # Act and Assert: Try to add a sixth weapon and assert that it raises the expected exception
+        with self.assertRaises(Exception):  # Replace with the actual exception expected
+            character.add_weapon(weapon_5)  # Attempting to add the weapon into the sixth position
 
     @patch('builtins.input', side_effect=['4'])
     def test_create_character_with_five_weapon_and_select_fourth(self, input):
-        raises = False
-        try:
-            character = Character(character_name_1, uses_magic, v_status_character)
-            character.add_weapon(weapon_1)
-            character.add_weapon(weapon_2)
-            character.add_weapon(weapon_3)
-            character.add_weapon(weapon_4)
-            character.add_weapon(weapon_5)
-        except:
-            raises = True
-        self.assertFalse(raises)
-        self.assertSetEqual(set(character.weapons), set([weapon_1, weapon_2, weapon_3, weapon_4]))
+        character = Character(character_name_1, uses_magic, v_status_character)
+        character.add_weapon(weapon_1)
+        character.add_weapon(weapon_2)
+        character.add_weapon(weapon_3)
+        character.add_weapon(weapon_4)
+        character.add_weapon(weapon_5)
+
+        self.assertSetEqual(set(character.weapons), {weapon_1, weapon_2, weapon_3, weapon_4})
 
     def test_remove_weapon_correct(self):
         raises = False
@@ -227,9 +217,9 @@ class MyTestCase(unittest.TestCase):
         weapon_defense = weapon_1.vital_status.defense + weapon_2.vital_status.defense + \
                          weapon_3.vital_status.defense + weapon_4.vital_status.defense
         weapon_magic_power = weapon_1.vital_status.magic_power + weapon_2.vital_status.magic_power + \
-                         weapon_3.vital_status.magic_power + weapon_4.vital_status.magic_power
+                             weapon_3.vital_status.magic_power + weapon_4.vital_status.magic_power
         weapon_magic_defense = weapon_1.vital_status.magic_defense + weapon_2.vital_status.magic_defense + \
-                         weapon_3.vital_status.magic_defense + weapon_4.vital_status.magic_defense
+                               weapon_3.vital_status.magic_defense + weapon_4.vital_status.magic_defense
 
         character_level_status = character.vital_status.get_vital_status_at_level(real_level)
         final_status = character.get_total_vital_status()
