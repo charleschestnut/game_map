@@ -97,8 +97,44 @@ class BoardMap:
             if square.type_square == 4:
                 return square.position
 
+    def get_start_square(self):
+        for square in self.squares:
+            if square.type_square == 4:
+                return square
+
+    def get_finish_square(self):
+        for square in self.squares:
+            if square.type_square == 6:
+                return square
+
     def get_square_types_list(self):
         return [square.type_square for square in self.squares]
+
+
+def _check_is_playable_boardmap(boardmap, squares_tree=None, actual_square=None):
+    finish_square = boardmap.get_finish_square()
+    if squares_tree is None:
+        start_square = boardmap.get_start_square()
+        actual_square = start_square
+        squares_tree = {start_square}
+
+    contiguous_squares = actual_square.get_available_squares(dice_number=1)
+    contiguous_squares_filter = [valor for valor in contiguous_squares if valor not in squares_tree]
+
+    if finish_square in contiguous_squares_filter:
+        return True
+
+    squares_tree.add(actual_square)
+
+    for square in contiguous_squares_filter:
+        if _check_is_playable_boardmap(boardmap, squares_tree=squares_tree,
+                                       actual_square=square):
+            return True
+    return False
+
+
+
+
 
 
 def _check_portal_pass_restrictions(squares):
