@@ -106,7 +106,6 @@ class MyTestCase(unittest.TestCase):
     def test_calc_possible_directions_dice_4(self):
         dice_number = 2
         possible_square_1 = board_map_9_x_9.get_square_by_position(3, 7)
-        # possible_square_2 = board_map_9_x_9.get_square_by_position(1, 5)
         possible_square_3 = board_map_9_x_9.get_square_by_position(2, 6)
         possible_squares = {possible_square_1, possible_square_3}
         possible_squares_dice = square_1_7_9x9.get_available_squares(dice_number)
