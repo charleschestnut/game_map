@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from print_map.game_objects import BoardMap, Character, Weapon, VitalStatus, Position, Game
+from print_map.game_objects.errors import WallError
 from print_map.game_objects.weapon import Specialty
 
 SQUARES = [1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -95,7 +96,6 @@ class MyTestCase(unittest.TestCase):
 
     @patch('builtins.input', side_effect=['3'])
     def test_create_character_with_five_weapon_and_select_third(self, input):
-
         character = Character(character_name_1, uses_magic, v_status_character)
         character.add_weapon(weapon_1)
         character.add_weapon(weapon_2)
@@ -130,67 +130,39 @@ class MyTestCase(unittest.TestCase):
         self.assertSetEqual(set(character.weapons), {weapon_1, weapon_2, weapon_3, weapon_4})
 
     def test_remove_weapon_correct(self):
-        raises = False
-        try:
-            character = Character(character_name_1, doesnt_use_magic, v_status_character)
-            character.add_weapon(weapon_5)
-            character.remove_weapon(0)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        character = Character(character_name_1, doesnt_use_magic, v_status_character)
+        character.add_weapon(weapon_5)
+        character.remove_weapon(0)
+        self.assertEqual(character.weapons, [])
 
     def test_remove_weapon_incorrect_index(self):
-        raises = False
-        try:
-            character = Character(character_name_1, uses_magic, v_status_character)
-            character.add_weapon(weapon_5)
+        character = Character(character_name_1, uses_magic, v_status_character)
+        character.add_weapon(weapon_5)
+        with self.assertRaises(IndexError):
             character.remove_weapon(1)
-        except:
-            raises = True
-        self.assertTrue(raises)
 
     def test_character_set_position_correctly(self):
-        raises = False
-        try:
-            position_2 = Position(4, 4)
-            character = Character(character_name_1, uses_magic, v_status_character)
-            game.append_character(character)
-            character.position = position_2
-        except:
-            raises = True
-        self.assertFalse(raises)
+        position_2 = Position(4, 4)
+        character = Character(character_name_1, uses_magic, v_status_character)
+        game.append_character(character)
+        character.position = position_2
+        self.assertEqual(game.characters, [character])
 
     def test_character_set_position_true_wall(self):
-        raises = False
-        try:
-            position_true_wall = Position(0, 0)
-            character = Character(character_name_1, doesnt_use_magic, v_status_character)
+        position_true_wall = Position(0, 0)
+        character = Character(character_name_1, doesnt_use_magic, v_status_character)
+        game.append_character(character)
+
+        with self.assertRaises(WallError):
             character.position = position_true_wall
-        except:
-            raises = True
-        self.assertTrue(raises)
 
-    def test_character_set_position_fake_wall_enough_level(self):
-        raises = False
-        try:
-            position_fake_wall = Position(2, 5)
-            character = Character(character_name_1, uses_magic, v_status_character)
-            game.append_character(character)
-            character.level = 3
-            character.position = position_fake_wall
-        except:
-            raises = True
-        self.assertFalse(raises)
+    def test_character_set_position_fake_wall(self):
+        position_fake_wall = Position(2, 5)
+        character = Character(character_name_1, doesnt_use_magic, v_status_character)
+        game.append_character(character)
 
-    def test_character_set_position_fake_wall_under_level(self):
-        raises = False
-        try:
-            position_fake_wall = Position(2, 5)
-            character = Character(character_name_1, doesnt_use_magic, v_status_character)
+        with self.assertRaises(WallError):
             character.position = position_fake_wall
-        except:
-            raises = True
-        self.assertTrue(raises)
 
     def test_character_get_total_level(self):
         character = Character(character_name_1, uses_magic, v_status_character)
@@ -210,16 +182,20 @@ class MyTestCase(unittest.TestCase):
         character.add_weapon(weapon_4)
         real_level = character.get_level_with_weapons()
 
-        weapon_health = weapon_1.vital_status.health + weapon_2.vital_status.health + \
-                        weapon_3.vital_status.health + weapon_4.vital_status.health
-        weapon_attack = weapon_1.vital_status.attack + weapon_2.vital_status.attack + \
-                        weapon_3.vital_status.attack + weapon_4.vital_status.attack
-        weapon_defense = weapon_1.vital_status.defense + weapon_2.vital_status.defense + \
-                         weapon_3.vital_status.defense + weapon_4.vital_status.defense
-        weapon_magic_power = weapon_1.vital_status.magic_power + weapon_2.vital_status.magic_power + \
-                             weapon_3.vital_status.magic_power + weapon_4.vital_status.magic_power
-        weapon_magic_defense = weapon_1.vital_status.magic_defense + weapon_2.vital_status.magic_defense + \
-                               weapon_3.vital_status.magic_defense + weapon_4.vital_status.magic_defense
+        weapon_health = (weapon_1.vital_status.health + weapon_2.vital_status.health +
+                         weapon_3.vital_status.health + weapon_4.vital_status.health)
+        weapon_attack = (weapon_1.vital_status.attack + weapon_2.vital_status.attack +
+                         weapon_3.vital_status.attack + weapon_4.vital_status.attack)
+        weapon_defense = (weapon_1.vital_status.defense + weapon_2.vital_status.defense +
+                          weapon_3.vital_status.defense + weapon_4.vital_status.defense)
+        weapon_magic_power = (weapon_1.vital_status.magic_power +
+                              weapon_2.vital_status.magic_power +
+                              weapon_3.vital_status.magic_power +
+                              weapon_4.vital_status.magic_power)
+        weapon_magic_defense = (weapon_1.vital_status.magic_defense +
+                                weapon_2.vital_status.magic_defense +
+                                weapon_3.vital_status.magic_defense +
+                                weapon_4.vital_status.magic_defense)
 
         character_level_status = character.vital_status.get_vital_status_at_level(real_level)
         final_status = character.get_total_vital_status()
