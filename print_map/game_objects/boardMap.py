@@ -1,7 +1,18 @@
 from .position import Position
 
 
+def check_is_playable(create_square_method):
+    def wrapper(self, *args, **kwargs):
+        # Call the original __init__ method to initialize the boardmap
+        create_square_method(self, *args, **kwargs)
+
+        if not _check_is_playable_boardmap(self):
+            raise ValueError("The boardmap is not playable")
+    return wrapper
+
+
 class BoardMap:
+
     def __init__(self, rows, cols):
         if rows <= 0 or cols <= 0:
             raise (Exception, 'Can not create a Boardmap with rows or columns lower than ZERO (0)')
@@ -42,6 +53,7 @@ class BoardMap:
     def _generate_error_message(self, message):
         return f'Error: {message} Currently, there are {len(self.squares)} squares.'
 
+    @check_is_playable
     def create_squares_of_boardmap(self, squares):
         if self.squares:
             raise TypeError(self._generate_error_message(
@@ -97,6 +109,16 @@ class BoardMap:
             if square.type_square == 4:
                 return square.position
 
+    def get_start_square(self):
+        for square in self.squares:
+            if square.type_square == 4:
+                return square
+
+    def get_finish_square(self):
+        for square in self.squares:
+            if square.type_square == 6:
+                return square
+
     def get_square_types_list(self):
         return [square.type_square for square in self.squares]
 
@@ -114,3 +136,24 @@ def _check_start_position_restrictions(squares):
 def _check_finish_position_restrictions(squares):
     counter = len([1 for square in squares if square == 6])
     return counter >= 1
+
+def _check_is_playable_boardmap(boardmap, squares_tree=None, actual_square=None):
+    finish_square = boardmap.get_finish_square()
+    if squares_tree is None:
+        start_square = boardmap.get_start_square()
+        actual_square = start_square
+        squares_tree = {start_square}
+
+    contiguous_squares = actual_square.get_available_squares(dice_number=1)
+    contiguous_squares_filter = [valor for valor in contiguous_squares if valor not in squares_tree]
+
+    if finish_square in contiguous_squares_filter:
+        return True
+
+    squares_tree.add(actual_square)
+
+    for square in contiguous_squares_filter:
+        if _check_is_playable_boardmap(boardmap, squares_tree=squares_tree,
+                                       actual_square=square):
+            return True
+    return False
