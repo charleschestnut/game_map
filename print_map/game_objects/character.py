@@ -1,6 +1,6 @@
 from . import Position
 from .boardMap import BoardMap
-from .errors import WallError, FakeWallError, InvalidCharacterError
+from .errors import WallError, InvalidCharacterError
 from .vitalStatus import VitalStatus
 from .weapon import Weapon, Specialty
 
@@ -69,10 +69,8 @@ class Character:
     def position(self, position: Position):
         square_to_move = self.game.board_map.get_square_by_position(position.x, position.y)
 
-        if square_to_move.type_square == 1:
+        if square_to_move.type_square == 1 or square_to_move.type_square == 2:
             raise WallError(position)
-        if square_to_move.type_square == 2 and self.level < 3:
-            raise FakeWallError(position, self.level)
 
         self._position = position
 
@@ -128,8 +126,8 @@ class Character:
 
     def remove_weapon(self, index):
         if index + 1 > len(self.weapons):
-            raise (Exception, 'To remove a weapon, select a integer between zero(0) and ' +
-                   str(len(self.weapons)))
+            raise IndexError(f'To remove a weapon, select a integer between zero(0) and '
+                             f'{str(len(self.weapons))}')
         else:
             del self.weapons[index]
 

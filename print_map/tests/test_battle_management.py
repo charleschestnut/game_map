@@ -31,7 +31,8 @@ v_status_weapon_5 = VitalStatus(1, 1, 1, 1, 1, None, 0)
 weapon_1 = Weapon("Super sword", "This sword cuts what it wants.", v_status_weapon_1)
 weapon_2 = Weapon("Super shield", "This sword cuts what it wants.", v_status_weapon_2)
 weapon_3 = Weapon("Super hat", "This hat makes you invisible.", v_status_weapon_3)
-weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.", v_status_weapon_4)
+weapon_4 = Weapon("Super boots", "Those boots let you pass though poisoned rivers.",
+                  v_status_weapon_4)
 weapon_monster = Weapon("Super book", "This book increases your magic power.", v_status_weapon_5)
 
 character_name = "Onion Knight"
@@ -58,23 +59,19 @@ game.append_weapon_list([weapon_1, weapon_2, weapon_3, weapon_4])
 
 class MyTestCase(unittest.TestCase):
     def test_initiation_battle(self):
-        raises = False
-        try:
-            battle = Battle(character)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        # Act: Initialize a Battle instance with the character
+        battle = Battle(character)
+        # Assert: Verify that the battle was initiated correctly
+        self.assertIsInstance(battle, Battle,
+                              "The battle should be an instance of the Battle class")
+        self.assertEqual(battle.character, character,
+                         "The battle's character should be set correctly")
 
     def test_battle_development(self):
-        raises = False
-        try:
-            battle = Battle(character)
-            has_won, acc = battle.realise()
-        except:
-            raises = True
-        self.assertFalse(raises)
+        battle = Battle(character)
+        has_won, acc = battle.realise()
         if has_won:
-            self.assertSetEqual(set(game.characters_alive), set([character]))
+            self.assertEqual(game.characters_alive, [character])
             self.assertEqual(character.level, 5)
         else:
             self.assertSetEqual(set(game.characters_alive), set([]))

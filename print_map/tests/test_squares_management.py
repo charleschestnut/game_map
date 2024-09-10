@@ -109,11 +109,11 @@ class MyTestCase(unittest.TestCase):
                           squares_without_finish)
 
     def test_create_boardmap_with_two_finish_position(self):
-        try:
-            empty_board_4_x_4.create_squares_of_boardmap(squares_with_two_finish)
-        except Exception as e:
-            self.fail("The creation of Boardmap with two finish position "
-                      "raised ExceptionType unexpectedly!")
+        empty_board_4_x_4.create_squares_of_boardmap(squares_with_two_finish)
+        finish_positions = [square for square in empty_board_4_x_4.squares
+                            if square.type_square == 6]
+        self.assertEqual(len(finish_positions), 2,
+                         "The board map should have exactly two finish positions.")
 
 
 if __name__ == '__main__':
