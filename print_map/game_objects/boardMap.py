@@ -1,7 +1,18 @@
 from .position import Position
 
 
+def check_is_playable(create_square_method):
+    def wrapper(self, *args, **kwargs):
+        # Call the original __init__ method to initialize the boardmap
+        create_square_method(self, *args, **kwargs)
+
+        if not _check_is_playable_boardmap(self):
+            raise ValueError("The boardmap is not playable")
+    return wrapper
+
+
 class BoardMap:
+
     def __init__(self, rows, cols):
         if rows <= 0 or cols <= 0:
             raise (Exception, 'Can not create a Boardmap with rows or columns lower than ZERO (0)')
@@ -42,6 +53,7 @@ class BoardMap:
     def _generate_error_message(self, message):
         return f'Error: {message} Currently, there are {len(self.squares)} squares.'
 
+    @check_is_playable
     def create_squares_of_boardmap(self, squares):
         if self.squares:
             raise TypeError(self._generate_error_message(
@@ -111,6 +123,20 @@ class BoardMap:
         return [square.type_square for square in self.squares]
 
 
+def _check_portal_pass_restrictions(squares):
+    counter = len([1 for square in squares if square == 5])
+    return counter != 1
+
+
+def _check_start_position_restrictions(squares):
+    counter = len([1 for square in squares if square == 4])
+    return counter == 1
+
+
+def _check_finish_position_restrictions(squares):
+    counter = len([1 for square in squares if square == 6])
+    return counter >= 1
+
 def _check_is_playable_boardmap(boardmap, squares_tree=None, actual_square=None):
     finish_square = boardmap.get_finish_square()
     if squares_tree is None:
@@ -131,22 +157,3 @@ def _check_is_playable_boardmap(boardmap, squares_tree=None, actual_square=None)
                                        actual_square=square):
             return True
     return False
-
-
-
-
-
-
-def _check_portal_pass_restrictions(squares):
-    counter = len([1 for square in squares if square == 5])
-    return counter != 1
-
-
-def _check_start_position_restrictions(squares):
-    counter = len([1 for square in squares if square == 4])
-    return counter == 1
-
-
-def _check_finish_position_restrictions(squares):
-    counter = len([1 for square in squares if square == 6])
-    return counter >= 1

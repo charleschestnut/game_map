@@ -29,7 +29,6 @@ BOARD_MAP_VALID = BoardMap(ROWS, COLS)
 BOARD_MAP_VALID.create_squares_of_boardmap(SQUARES_VALID)
 
 BOARD_MAP_INVALID = BoardMap(ROWS, COLS)
-BOARD_MAP_INVALID.create_squares_of_boardmap(SQUARES_INVALID)
 
 
 class MyTestCase(unittest.TestCase):
@@ -38,5 +37,6 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(_check_is_playable_boardmap(BOARD_MAP_VALID))
 
     def test_correct_not_playable_boardmap(self):
-        self.assertFalse(_check_is_playable_boardmap(BOARD_MAP_INVALID))
+        with self.assertRaises(ValueError):
+            BOARD_MAP_INVALID.create_squares_of_boardmap(SQUARES_INVALID)
 
