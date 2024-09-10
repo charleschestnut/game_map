@@ -9,22 +9,34 @@ weapon_monster = Weapon('Super sword', ' This sword cuts what it wants.', vital_
 
 class MyTestCase(unittest.TestCase):
     def test_correct_initiation(self):
-        raises = False
-        try:
-            uses_magic = False
-            monster = Monster('Goomba', uses_magic, vital_status_monster, weapon_monster)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        uses_magic = False
+        monster_name = 'Goomba'
+
+        # Act: Create a Monster instance
+        monster = Monster(monster_name, uses_magic, vital_status_monster, weapon_monster)
+
+        # Assert: Verify the monster was initialized correctly
+        self.assertEqual(monster.name, monster_name, "The monster's name should be 'Goomba'")
+        self.assertEqual(monster.uses_magic, uses_magic, "The monster should not use magic")
+        self.assertEqual(monster.vital_status, vital_status_monster,
+                         "The monster's vital status should match the provided value")
+        self.assertEqual(monster.weapon, weapon_monster,
+                         "The monster's weapon should match the provided weapon")
 
     def test_correct_initiation_without_weapon(self):
-        raises = False
-        try:
-            uses_magic = False
-            monster = Monster('Goomba', uses_magic, vital_status_monster)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        uses_magic = False
+        monster_name = 'Goomba'
+
+        # Act: Create a Monster instance
+        monster = Monster(monster_name, uses_magic, vital_status_monster)
+
+        # Assert: Verify the monster was initialized correctly
+        self.assertEqual(monster.name, monster_name, "The monster's name should be 'Goomba'")
+        self.assertEqual(monster.uses_magic, uses_magic, "The monster should not use magic")
+        self.assertEqual(monster.vital_status, vital_status_monster,
+                         "The monster's vital status should match the provided value")
+        self.assertEqual(monster.weapon, None,
+                         "The monster's weapon should match the provided weapon")
 
     def test_initiation_without_name(self):
         uses_magic = False

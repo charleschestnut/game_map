@@ -29,57 +29,31 @@ monster_2 = Monster('Koopa', True, vital_status_monster, weapon_monster)
 class MyTestCase(unittest.TestCase):
 
     def test_game_get_random_monster(self):
-        raises = False
-        try:
-            game.append_monster(monster_1)
-            game.append_monster(monster_2)
-            monster_random = game.get_random_monster()
-            print(monster_random)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        game.append_monster(monster_1)
+        game.append_monster(monster_2)
+        monster_random = game.get_random_monster()
+        self.assertIn(monster_random, [monster_1, monster_2])
 
     def test_game_append_monster(self):
-        raises = False
-        try:
-            game.append_monster(monster_1)
-            game.append_monster(monster_2)
-        except:
-            raises = True
-        self.assertFalse(raises)
+        game.append_monster(monster_1)
+        game.append_monster(monster_2)
+        self.assertEqual(len(game.monsters), 2)
 
     def test_game_append_monster_list(self):
-        raises = False
-        try:
-            game.append_monster_list([monster_1, monster_2])
-        except:
-            raises = True
-        self.assertFalse(raises)
+        game.append_monster_list([monster_1, monster_2])
+        self.assertEqual(len(game.monsters), 2)
 
-    def test_game_None_append_monster(self):
-        raises = False
-        try:
-            game.append_monster()
-        except:
-            raises = True
-        self.assertTrue(raises)
-
-    def test_game_None_append_monster(self):
-        raises = False
-        try:
-            board_map.append_monster()
-        except:
-            raises = True
-        self.assertTrue(raises)
+    def test_game_none_append_monster(self):
+        # Assert that appending None raises an exception (e.g., TypeError, ValueError, etc.)
+        with self.assertRaises(TypeError, msg="Appending None should raise a TypeError"):
+            game.append_monster(None)
 
     def test_game_wrong_instance_append_monster(self):
-        raises = False
-        try:
+        # Assert that appending a string instead of a monster
+        # raises a TypeError (or appropriate exception)
+        with self.assertRaises(TypeError,
+                               msg="Appending a non-monster object should raise a TypeError"):
             game.append_monster('Monster')
-        except:
-            raises = True
-        self.assertTrue(raises)
-
 
 
 if __name__ == '__main__':
